@@ -1,4 +1,4 @@
-![Icon](https://raw.githubusercontent.com/devlooped/json/main/assets/img/icon-32.png) JsonPeek and JsonPoke MSBuild Tasks
+![Icon](https://raw.githubusercontent.com/devlooped/json/main/assets/img/json.png) JsonPeek and JsonPoke MSBuild Tasks
 ============
 
 [![Version](https://img.shields.io/nuget/vpre/JsonPeek.svg?color=royalblue)](https://www.nuget.org/packages/JsonPeek)
