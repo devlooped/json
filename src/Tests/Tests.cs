@@ -41,7 +41,7 @@ public record Tests(ITestOutputHelper Output)
                 Loggers = new ILogger[] { logger }
             },
             new BuildRequestData(
-                Path.Combine(Directory.GetCurrentDirectory(), file), 
+                Path.Combine(Directory.GetCurrentDirectory(), file),
                 new Dictionary<string, string>(), null, new[] { name }, null));
 
         if (failure)
@@ -55,7 +55,7 @@ public record Tests(ITestOutputHelper Output)
         }
         else
         {
-            if (result.OverallResult != BuildResultCode.Success) 
+            if (result.OverallResult != BuildResultCode.Success)
                 Output.WriteLine(string.Join(Environment.NewLine, logger.Events
                     .Select(e => e.Message)));
 

@@ -93,7 +93,7 @@ public class JsonPoke : Task
                 case JTokenType.Array:
                     node.Replace(new JArray(jvalue.Value));
                     break;
-                case JTokenType.Integer when long.TryParse(Value[0].ItemSpec, out var typed) :
+                case JTokenType.Integer when long.TryParse(Value[0].ItemSpec, out var typed):
                     node.Replace(new JValue(typed));
                     break;
                 case JTokenType.Float when decimal.TryParse(Value[0].ItemSpec, out var typed):
