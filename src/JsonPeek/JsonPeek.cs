@@ -54,7 +54,11 @@ public class JsonPeek : Task
 
         var json = JObject.Parse(content!);
 
-        Result = json.SelectTokens(Query).SelectMany(x => x.AsItems()).ToArray();
+        Result = json.SelectTokens(Query)
+            // NOTE: we cannot create items with empty ItemSpec, so skip them entirely.
+            // see https://github.com/dotnet/msbuild/issues/3399
+            .Where(x => !string.IsNullOrEmpty(x.ToString()))
+            .SelectMany(x => x.AsItems()).ToArray();
 
         return true;
     }
