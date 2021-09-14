@@ -1,5 +1,9 @@
 
 
+## [v1.0.0-rc](https://github.com/devlooped/json/tree/v1.0.0-rc) (2021-09-14)
+
+[Full Changelog](https://github.com/devlooped/json/compare/v1.0.0-beta...v1.0.0-rc)
+
 ## [v1.0.0-beta](https://github.com/devlooped/json/tree/v1.0.0-beta) (2021-09-14)
 
 [Full Changelog](https://github.com/devlooped/json/compare/v1.0.0-alpha...v1.0.0-beta)
