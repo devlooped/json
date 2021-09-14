@@ -64,3 +64,10 @@ These item metadata values could be read as MSBuild properties as follows, for e
     <Ssl>@(Http -> '%(ssl)')</Ssl>
 </PropertyGroup>
 ```
+
+
+## Sponsors
+
+[![sponsored](https://raw.githubusercontent.com/devlooped/oss/main/assets/images/sponsors.svg)](https://github.com/sponsors/devlooped) [![clarius](https://raw.githubusercontent.com/clarius/branding/main/logo/byclarius.svg)](https://github.com/clarius)[![clarius](https://raw.githubusercontent.com/clarius/branding/main/logo/logo.svg)](https://github.com/clarius)
+
+*[get mentioned here too](https://github.com/sponsors/devlooped)!*

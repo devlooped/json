@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <IsPackable>true</IsPackable>
-    <Description>JsonPoke MSBuild Task</Description>
+    <Description>MSBuild task to write values to JSON nodes selected with JSONPath.</Description>
     <PackFolder>build</PackFolder>
     <PackNone>true</PackNone>
   </PropertyGroup>
