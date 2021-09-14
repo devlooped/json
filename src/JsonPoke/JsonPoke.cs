@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -41,6 +42,12 @@ public class JsonPoke : Task
     public ITaskItem[] Properties { get; set; } = Array.Empty<ITaskItem>();
 
     /// <summary>
+    /// Contains the updated JSON nodes.
+    /// </summary>
+    [Output]
+    public ITaskItem[] Result { get; private set; } = new ITaskItem[0];
+
+    /// <summary>
     /// Locates nodes matching the <see cref="Query"/> and replaces their contents 
     /// with the provided <see cref="Value"/>.
     /// </summary>
@@ -68,14 +75,38 @@ public class JsonPoke : Task
         var jvalue = new Lazy<JToken>(GetValue);
 
         var json = JObject.Parse(content!);
-        foreach (var node in json.SelectTokens(Query))
+        var nodes = json.SelectTokens(Query).ToList();
+        var result = new List<ITaskItem>();
+
+        void AddResult(JToken node, int index)
         {
+            if (nodes.Count == 1)
+            {
+                result.Add(new TaskItem(Query, new Dictionary<string, string>
+                {
+                    { "Value", node.AsString() }
+                }));
+            }
+            else
+            {
+                result.Add(new TaskItem(Query + "[" + index + "]", new Dictionary<string, string>
+                {
+                    { "Value", node.AsString() }
+                }));
+            }
+        }
+
+        for (var i = 0; i < nodes.Count; i++)
+        {
+            var node = nodes[i];
+
             if (Value.Length > 1 || Properties.Length != 0 || RawValue != null)
             {
                 // We'll be doing complex object replacement, 
                 // so just replace the whole thing in one shot, 
                 // no smarts for target-type selection.
                 node.Replace(jvalue.Value);
+                AddResult(jvalue.Value, i);
                 continue;
             }
 
@@ -85,46 +116,27 @@ public class JsonPoke : Task
             // native node type being replaced. This allows us to preserve the
             // native JSON type whenever possible.
 
-            switch (node.Type)
+            var value = node.Type switch
             {
-                case JTokenType.String:
-                    node.Replace(new JValue(Value[0].ItemSpec));
-                    break;
-                case JTokenType.Array:
-                    node.Replace(new JArray(jvalue.Value));
-                    break;
-                case JTokenType.Integer when long.TryParse(Value[0].ItemSpec, out var typed):
-                    node.Replace(new JValue(typed));
-                    break;
-                case JTokenType.Float when decimal.TryParse(Value[0].ItemSpec, out var typed):
-                    node.Replace(new JValue(typed));
-                    break;
-                case JTokenType.Boolean when bool.TryParse(Value[0].ItemSpec, out var typed):
-                    node.Replace(new JValue(typed));
-                    break;
-                case JTokenType.Date when DateTime.TryParseExact(Value[0].ItemSpec, "O", CultureInfo.CurrentCulture, DateTimeStyles.RoundtripKind, out var typed):
-                    node.Replace(new JValue(typed));
-                    break;
-                case JTokenType.Date when DateTime.TryParse(Value[0].ItemSpec, out var typed):
-                    node.Replace(new JValue(typed));
-                    break;
-                case JTokenType.Guid when Guid.TryParse(Value[0].ItemSpec, out var typed):
-                    node.Replace(new JValue(typed));
-                    break;
-                case JTokenType.Uri when Uri.TryCreate(Value[0].ItemSpec, UriKind.RelativeOrAbsolute, out var typed):
-                    node.Replace(new JValue(typed));
-                    break;
-                case JTokenType.TimeSpan when TimeSpan.TryParse(Value[0].ItemSpec, out var typed):
-                    node.Replace(new JValue(typed));
-                    break;
-                default:
-                    // Default to just replacing with whatever value we calculated.
-                    node.Replace(jvalue.Value);
-                    break;
-            }
+                JTokenType.String => new JValue(Value[0].ItemSpec),
+                JTokenType.Array => new JArray(jvalue.Value),
+                JTokenType.Integer when long.TryParse(Value[0].ItemSpec, out var typed) => new JValue(typed),
+                JTokenType.Float when decimal.TryParse(Value[0].ItemSpec, out var typed) => new JValue(typed),
+                JTokenType.Boolean when bool.TryParse(Value[0].ItemSpec, out var typed) => new JValue(typed),
+                JTokenType.Date when DateTime.TryParseExact(Value[0].ItemSpec, "O", CultureInfo.CurrentCulture, DateTimeStyles.RoundtripKind, out var typed) => new JValue(typed),
+                JTokenType.Date when DateTime.TryParse(Value[0].ItemSpec, out var typed) => new JValue(typed),
+                JTokenType.Guid when Guid.TryParse(Value[0].ItemSpec, out var typed) => new JValue(typed),
+                JTokenType.Uri when Uri.TryCreate(Value[0].ItemSpec, UriKind.RelativeOrAbsolute, out var typed) => new JValue(typed),
+                JTokenType.TimeSpan when TimeSpan.TryParse(Value[0].ItemSpec, out var typed) => new JValue(typed),
+                _ => jvalue.Value,
+            };
+
+            node.Replace(value);
+            AddResult(value, i);
         }
 
         File.WriteAllText(filePath, json.ToString(Formatting.Indented));
+        Result = result.ToArray();
 
         return true;
     }

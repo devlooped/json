@@ -164,6 +164,11 @@ Note how the native JSON type was automatically inferred, even though everything
 basically a string in MSBuild. As noted above, you can surround any of the item metadata 
 values in double or single quotes to force them to be written as strings instead.
 
+The modified JSON nodes can be assigned to an item name using the `Result` task property, 
+and will contain the item path (matching the `Query` plus the index if multiple nodes were modified) 
+as well as the `Value` item metadata containing the raw JSON that was written.
+
+
 # Dogfooding
 
 [![CI Version](https://img.shields.io/endpoint?url=https://shields.kzu.io/vpre/JsonPeek/main&label=nuget.ci&color=brightgreen)](https://pkg.kzu.io/index.json)

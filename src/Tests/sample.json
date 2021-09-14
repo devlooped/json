@@ -19,5 +19,19 @@
     "ports": [
       "80"
     ]
+  },
+  "routes": {
+    "/": {
+      "verb": "GET",
+      "anonymous": true
+    },
+    "/login": {
+      "verb": "GET",
+      "anonymous": true
+    },
+    "/admin": {
+      "verb": "GET",
+      "anonymous": false
+    }
   }
 }

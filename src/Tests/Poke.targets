@@ -160,7 +160,9 @@
       <HttpPort Include="'1080'" />
     </ItemGroup>
 
-    <JsonPoke ContentPath="sample.json" Query="$.http.ports" Value="@(HttpPort)" />
+    <JsonPoke ContentPath="sample.json" Query="$.http.ports" Value="@(HttpPort)">
+      <Output TaskParameter="Result" ItemName="HttpPorts" />
+    </JsonPoke>
 
     <JsonPeek ContentPath="sample.json" Query="$.http">
       <Output TaskParameter="Result" PropertyName="Actual" />
@@ -175,7 +177,9 @@
       <Expected>foo</Expected>
     </PropertyGroup>
 
-    <JsonPoke ContentPath="sample.json" Query="$(Query)" Value="$(Expected)" />
+    <JsonPoke ContentPath="sample.json" Query="$(Query)" Value="$(Expected)">
+      <Output TaskParameter="Result" ItemName="JObject" />
+    </JsonPoke>
     
     <JsonPeek ContentPath="sample.json" Query="$(Query)">
       <Output TaskParameter="Result" PropertyName="Actual" />
@@ -207,6 +211,17 @@
     </JsonPeek>
     
     <Error Condition="'$(Expected)' != '$(Actual)'" Text="Expected $(Expected) but was $(Actual)" />
-  </Target>  
+  </Target>
+
+  <Target Name="PokeMultipleValues">
+    <PropertyGroup>
+      <Query>$.routes.*.anonymous</Query>
+    </PropertyGroup>
+
+    <JsonPoke ContentPath="sample.json" Query="$(Query)" Value="false">
+      <Output TaskParameter="Result" ItemName="Changed" />
+    </JsonPoke>
+    
+  </Target>
 
 </Project>
