@@ -1,0 +1,100 @@
+﻿<Project>
+
+  <UsingTask AssemblyFile="JsonPeek.dll" TaskName="JsonPeek"/>
+
+  <Target Name="NoFileOrContent" Label="Error:JPE01">
+    <JsonPeek Query="$.hello" />
+  </Target>
+
+  <Target Name="FileNotFound" Label="Error:JPE02">
+    <JsonPeek JsonInputPath="Foo.json" Query="$.hello" />
+  </Target>
+
+  <Target Name="FileAndContent" Label="Error:JPE03">
+    <JsonPeek JsonContent="{ }" JsonInputPath="empty.json" Query="$.hello" />
+  </Target>
+
+  <Target Name="EmptyJson" Label="Warning:JPE04">
+    <JsonPeek JsonInputPath="empty.json" Query="$.hello" />
+  </Target>
+
+  <Target Name="PeekSimpleValue">
+    <PropertyGroup>
+      <Json>
+        {
+          "hello": "world"
+        }
+      </Json>
+      <Query>$.hello</Query>
+      <Expected>world</Expected>
+    </PropertyGroup>
+
+    <JsonPeek JsonContent="$(Json)" Query="$(Query)">
+      <Output TaskParameter="Result" PropertyName="Actual" />
+    </JsonPeek>
+    
+    <Error Condition="'$(Expected)' != '$(Actual)'" Text="Expected $(Expected) but was $(Actual)" />
+  </Target>
+
+  <Target Name="PeekFileValues">
+    <JsonPeek JsonInputPath="sample.json" Query="$.immutable">
+      <Output TaskParameter="Result" PropertyName="Actual" />
+    </JsonPeek>
+    <Error Condition="'$(Actual)' != 'value'" Text="Expected 'value' but was $(Actual)" />
+  </Target>
+
+  <Target Name="PeekMultipleValues">
+    <PropertyGroup>
+      <Json>
+        {
+          "foo": [
+            1, 
+            2, 
+            3
+          ]
+        }
+      </Json>
+      <Query>$.foo</Query>
+      <Expected>1;2;3</Expected>
+    </PropertyGroup>
+
+    <JsonPeek JsonContent="$(Json)" Query="$(Query)">
+      <Output TaskParameter="Result" ItemName="Actual" />
+    </JsonPeek>
+
+    <PropertyGroup>
+      <Actual>@(Actual)</Actual>
+    </PropertyGroup>
+
+    <Error Condition="'$(Expected)' != '$(Actual)'" Text="Expected $(Expected) but was $(Actual)" />
+  </Target>
+
+  <Target Name="PeekObjectAsItem">
+    <PropertyGroup>
+      <Json>
+{
+    "http": {
+        "host": "localhost",
+        "port": 80,
+        "ssl": true
+    }
+}
+      </Json>
+    </PropertyGroup>
+
+    <JsonPeek JsonContent="$(Json)" Query="$.http">
+      <Output TaskParameter="Result" ItemName="Http" />
+    </JsonPeek>
+
+    <PropertyGroup>
+      <Host>@(Http -> '%(host)')</Host>
+      <Port>@(Http -> '%(port)')</Port>
+      <Ssl>@(Http -> '%(ssl)')</Ssl>
+    </PropertyGroup>
+
+    <Error Condition="'$(Host)' != 'localhost'" Text="Expected 'localhost' but was $(Host)" />
+    <Error Condition="'$(Port)' != '80'" Text="Expected '80' but was $(Port)" />
+    <Error Condition="'$(Ssl)' != 'true'" Text="Expected 'true' but was $(Ssl)" />
+  </Target>
+
+</Project>

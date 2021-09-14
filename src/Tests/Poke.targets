@@ -1,0 +1,212 @@
+﻿<Project>
+
+  <UsingTask TaskName="Error" AssemblyName="Microsoft.Build.Tasks.Core, PublicKeyToken=b03f5f7f11d50a3a" />
+  <UsingTask TaskName="Message" AssemblyName="Microsoft.Build.Tasks.Core, PublicKeyToken=b03f5f7f11d50a3a" />
+  <UsingTask AssemblyFile="JsonPoke.dll" TaskName="JsonPoke"/>
+  <UsingTask AssemblyFile="JsonPeek.dll" TaskName="JsonPeek"/>
+
+  <Target Name="NoFile" Label="Error:MSB4044">
+    <JsonPoke Query="$.hello" />
+  </Target>
+
+  <Target Name="FileNotFound" Label="Error:JPO02">
+    <JsonPoke JsonInputPath="Foo.json" Query="$.hello" />
+  </Target>
+
+  <Target Name="EmptyJson" Label="Error:JPO03">
+    <JsonPoke JsonInputPath="empty.json" Query="$.hello" />
+  </Target>
+
+  <Target Name="NoValue" Label="Warning:JPO04">
+    <JsonPoke JsonInputPath="sample.json" Query="$.hello" />
+  </Target>
+  
+  <Target Name="PokeSimpleValue">
+    <PropertyGroup>
+      <Query>$.hello</Query>
+      <Expected>goodbye</Expected>
+    </PropertyGroup>
+    
+    <JsonPeek JsonInputPath="sample.json" Query="$(Query)">
+      <Output TaskParameter="Result" PropertyName="Actual" />
+    </JsonPeek>
+    
+    <Error Condition="'$(Expected)' == '$(Actual)'" Text="Did not expect $(Expected) for $(Query)" />
+
+    <JsonPoke JsonInputPath="sample.json" Query="$(Query)" Value="$(Expected)" />
+    
+    <JsonPeek JsonInputPath="sample.json" Query="$(Query)">
+      <Output TaskParameter="Result" PropertyName="Actual" />
+    </JsonPeek>
+    
+    <Error Condition="'$(Expected)' != '$(Actual)'" Text="Expected $(Expected) but was $(Actual)" />
+  </Target>
+
+  <Target Name="PokeBoolean">
+    <PropertyGroup>
+      <Query>$.enabled</Query>
+      <Expected>false</Expected>
+    </PropertyGroup>
+    
+    <JsonPoke JsonInputPath="sample.json" Query="$(Query)" Value="$(Expected)" />
+    
+    <JsonPeek JsonInputPath="sample.json" Query="$(Query)">
+      <Output TaskParameter="Result" PropertyName="Actual" />
+    </JsonPeek>
+    
+    <Error Condition="'$(Expected)' != '$(Actual)'" Text="Expected $(Expected) but was $(Actual)" />
+  </Target>
+
+  <Target Name="PokeInteger">
+    <PropertyGroup>
+      <Query>$.count</Query>
+      <Expected>42</Expected>
+    </PropertyGroup>
+    
+    <JsonPoke JsonInputPath="sample.json" Query="$(Query)" Value="$(Expected)" />
+    
+    <JsonPeek JsonInputPath="sample.json" Query="$(Query)">
+      <Output TaskParameter="Result" PropertyName="Actual" />
+    </JsonPeek>
+    
+    <Error Condition="'$(Expected)' != '$(Actual)'" Text="Expected $(Expected) but was $(Actual)" />
+  </Target>
+
+  <Target Name="PokeDecimal">
+    <PropertyGroup>
+      <Query>$.decimal</Query>
+      <Expected>42.42</Expected>
+    </PropertyGroup>
+    
+    <JsonPoke JsonInputPath="sample.json" Query="$(Query)" Value="$(Expected)" />
+    
+    <JsonPeek JsonInputPath="sample.json" Query="$(Query)">
+      <Output TaskParameter="Result" PropertyName="Actual" />
+    </JsonPeek>
+    
+    <Error Condition="'$(Expected)' != '$(Actual)'" Text="Expected $(Expected) but was $(Actual)" />
+  </Target>
+  
+  <Target Name="PokeArray">
+    <PropertyGroup>
+      <Query>$.values</Query>
+      <Expected>9;8;7</Expected>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Value Include="$(Expected)" />
+    </ItemGroup>
+    
+    <Error Condition="'@(Value -> Count())' != 3" Text="Expected 3 Value items" />
+
+    <JsonPoke JsonInputPath="sample.json" Query="$(Query)" Value="@(Value)" />
+    
+    <JsonPeek JsonInputPath="sample.json" Query="$(Query)">
+      <Output TaskParameter="Result" PropertyName="Actual" />
+    </JsonPeek>
+    
+    <Error Condition="'$(Expected)' != '$(Actual)'" Text="Expected $(Expected) but was $(Actual)" />
+  </Target>
+
+  <Target Name="PokeArrayItem">
+    <PropertyGroup>
+      <Query>$.values[0]</Query>
+      <Expected>42</Expected>
+    </PropertyGroup>
+
+    <JsonPoke JsonInputPath="sample.json" Query="$(Query)" Value="$(Expected)" />
+
+    <JsonPeek JsonInputPath="sample.json" Query="$(Query)">
+      <Output TaskParameter="Result" PropertyName="Actual" />
+    </JsonPeek>
+
+    <Error Condition="'$(Expected)' != '$(Actual)'" Text="Expected $(Expected) but was $(Actual)" />
+  </Target>
+
+  <Target Name="PokeStringArray">
+    <PropertyGroup>
+      <Query>$.strings</Query>
+      <Expected>4;5;6</Expected>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <!-- Force values to be written as strings -->
+      <Value Include="'4';'5';'6'" />
+    </ItemGroup>
+    
+    <Error Condition="'@(Value -> Count())' != 3" Text="Expected 3 Value items" />
+
+    <JsonPoke JsonInputPath="sample.json" Query="$(Query)" Value="@(Value)" />
+    
+    <JsonPeek JsonInputPath="sample.json" Query="$(Query)">
+      <Output TaskParameter="Result" PropertyName="Actual" />
+    </JsonPeek>
+    
+    <Error Condition="'$(Expected)' != '$(Actual)'" Text="Expected $(Expected) but was $(Actual)" />
+  </Target>
+
+  <Target Name="PokeStringArray2">
+    <PropertyGroup>
+      <Expected>{
+  "ports": [
+    "8080",
+    "1080"
+  ]
+}</Expected> 
+    </PropertyGroup>
+    
+    <ItemGroup>
+      <HttpPort Include="'8080'" />
+      <HttpPort Include="'1080'" />
+    </ItemGroup>
+
+    <JsonPoke JsonInputPath="sample.json" Query="$.http.ports" Value="@(HttpPort)" />
+
+    <JsonPeek JsonInputPath="sample.json" Query="$.http">
+      <Output TaskParameter="Result" PropertyName="Actual" />
+    </JsonPeek>
+    
+    <Error Condition="'$(Expected)' != '$(Actual)'" Text="Expected $(Expected) but was $(Actual)" />
+  </Target>
+
+  <Target Name="PokeObject">
+    <PropertyGroup>
+      <Query>$.object.name</Query>
+      <Expected>foo</Expected>
+    </PropertyGroup>
+
+    <JsonPoke JsonInputPath="sample.json" Query="$(Query)" Value="$(Expected)" />
+    
+    <JsonPeek JsonInputPath="sample.json" Query="$(Query)">
+      <Output TaskParameter="Result" PropertyName="Actual" />
+    </JsonPeek>
+    
+    <Error Condition="'$(Expected)' != '$(Actual)'" Text="Expected $(Expected) but was $(Actual)" />
+  </Target>
+
+  <Target Name="PokeObjectValue">
+    <PropertyGroup>
+      <Query>$.object</Query>
+      <Expected>{
+  "name": "foo",
+  "age": 25
+}</Expected>
+    </PropertyGroup>
+    
+    <ItemGroup>
+      <Value Include="value">
+        <name>foo</name>
+        <age>25</age>
+      </Value>
+    </ItemGroup>
+
+    <JsonPoke JsonInputPath="sample.json" Query="$(Query)" Value="@(Value)" Properties="name;age" />
+    
+    <JsonPeek JsonInputPath="sample.json" Query="$(Query)">
+      <Output TaskParameter="Result" PropertyName="Actual" />
+    </JsonPeek>
+    
+    <Error Condition="'$(Expected)' != '$(Actual)'" Text="Expected $(Expected) but was $(Actual)" />
+  </Target>  
+
+</Project>

@@ -1,0 +1,23 @@
+{
+  "immutable": "value",
+  "hello": "world",
+  "when": "2021-09-09",
+  "enabled": true,
+  "count": 10,
+  "decimal": 0.5,
+  "values": [
+    2,
+    3,
+    4
+  ],
+  "strings": [
+  ],
+  "object": {
+    "name": "kzu"
+  },
+  "http": {
+    "ports": [
+      "80"
+    ]
+  }
+}

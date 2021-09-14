@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3" />
+
+    <PackageReference Include="Microsoft.Build" Version="16.11.0" />
+    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="16.11.0" />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="16.11.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JsonPeek\JsonPeek.csproj" />
+    <ProjectReference Include="..\JsonPoke\JsonPoke.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="@(None)" CopyToOutputDirectory="Always" />
+    <None Update="readme.md">
+      <PackFolder>$(PackFolder)</PackFolder>
+    </None>
+  </ItemGroup>
+
+</Project>
