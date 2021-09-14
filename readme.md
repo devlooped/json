@@ -14,16 +14,16 @@ Read values from JSON using JSONPath.
 Usage:
 
 ```xml
-  <JsonPeek JsonInputPath="[JSON_FILE]" Query="[JSONPath]">
+  <JsonPeek ContentPath="[JSON_FILE]" Query="[JSONPath]">
     <Output TaskParameter="Result" PropertyName="Value" />
   </JsonPeek>
-  <JsonPeek JsonContent="[JSON]" Query="[JSONPath]">
+  <JsonPeek Content="[JSON]" Query="[JSONPath]">
     <Output TaskParameter="Result" ItemName="Values" />
   </JsonPeek>
 ```
 
-You can either provide the path to a JSON file via `JsonInputPath` or 
-provide the straight JSON content to `JsonContent`. The `Query` is a 
+You can either provide the path to a JSON file via `ContentPath` or 
+provide the straight JSON content to `Content`. The `Query` is a 
 [JSONPath](https://goessner.net/articles/JsonPath/) expression that is evaluated 
 and returned via the `Result` task parameter. You can assign the resulting 
 value to either a property (i.e. for a single value) or an item name (i.e. 
@@ -46,7 +46,7 @@ You can read the entire `http` value as an item with each property as a metadata
 value with:
 
 ```xml
-<JsonPeek JsonInputPath="host.json" Query="$.http">
+<JsonPeek ContentPath="host.json" Query="$.http">
     <Output TaskParameter="Result" ItemName="Http" />
 </JsonPeek>
 ```
@@ -83,8 +83,8 @@ Write values to JSON nodes selected with JSONPath
 Usage:
 
 ```xml
-  <JsonPoke JsonInputPath="[JSON_FILE]" Query="[JSONPath]" Value="[VALUE]" />
-  <JsonPoke JsonInputPath="[JSON_FILE]" Query="[JSONPath]" RawValue="[JSON]" />
+  <JsonPoke ContentPath="[JSON_FILE]" Query="[JSONPath]" Value="[VALUE]" />
+  <JsonPoke ContentPath="[JSON_FILE]" Query="[JSONPath]" RawValue="[JSON]" />
 ```
 
 The `Value` can be an item group, and in that case, it will be inserted into the 
@@ -118,7 +118,7 @@ explicit quotes, the values would be interpreted as numbers otherwise):
     <HttpPort Include="'1080'" />
   </ItemGroup>
 
-  <JsonPoke JsonInputPath="http.json" Query="$.http.ports" Value="@(HttpPort)" />
+  <JsonPoke ContentPath="http.json" Query="$.http.ports" Value="@(HttpPort)" />
 ```
 
 Result:
@@ -145,7 +145,7 @@ It's also possible to write a complex object based on MSBuild item metadata:
      </Value>
    </ItemGroup>
 
-   <JsonPoke JsonInputPath="http.json" Query="$.http" Value="@(Http)" Properties="host;port;ssl" />
+   <JsonPoke ContentPath="http.json" Query="$.http" Value="@(Http)" Properties="host;port;ssl" />
 ```
 
 Result:

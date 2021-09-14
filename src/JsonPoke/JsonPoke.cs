@@ -16,7 +16,7 @@ public class JsonPoke : Task
     /// Specifies the JSON input as a file path.
     /// </summary>
     [Required]
-    public ITaskItem? JsonInputPath { get; set; }
+    public ITaskItem? ContentPath { get; set; }
 
     /// <summary>
     /// Specifies the JSONPath query.
@@ -46,13 +46,13 @@ public class JsonPoke : Task
     /// </summary>
     public override bool Execute()
     {
-        if (JsonInputPath == null)
-            return Log.Error("JPO01", $"{nameof(JsonInputPath)} is required.");
+        if (ContentPath == null)
+            return Log.Error("JPO01", $"{nameof(ContentPath)} is required.");
 
-        var filePath = JsonInputPath.GetMetadata("FullPath");
+        var filePath = ContentPath.GetMetadata("FullPath");
 
         if (!File.Exists(filePath))
-            return Log.Error("JPO02", $"Specified {nameof(JsonInputPath)} not found at {filePath}.");
+            return Log.Error("JPO02", $"Specified {nameof(ContentPath)} not found at {filePath}.");
 
         var content = File.ReadAllText(filePath);
 

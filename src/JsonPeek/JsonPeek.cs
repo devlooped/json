@@ -12,12 +12,12 @@ public class JsonPeek : Task
     /// <summary>
     /// Specifies the JSON input as a string.
     /// </summary>
-    public string? JsonContent { get; set; }
+    public string? Content { get; set; }
 
     /// <summary>
     /// Specifies the JSON input as a file path.
     /// </summary>
-    public ITaskItem? JsonInputPath { get; set; }
+    public ITaskItem? ContentPath { get; set; }
 
     /// <summary>
     /// Specifies the JSONPath query.
@@ -33,21 +33,21 @@ public class JsonPeek : Task
 
     /// <summary>
     /// Executes the <see cref="Query"/> against either the 
-    /// <see cref="JsonContent"/> or <see cref="JsonInputPath"/> JSON.
+    /// <see cref="Content"/> or <see cref="ContentPath"/> JSON.
     /// </summary>
     public override bool Execute()
     {
-        if (JsonContent == null && JsonInputPath == null)
-            return Log.Error("JPE01", $"Either {nameof(JsonContent)} or {nameof(JsonInputPath)} must be provided.");
+        if (Content == null && ContentPath == null)
+            return Log.Error("JPE01", $"Either {nameof(Content)} or {nameof(ContentPath)} must be provided.");
 
-        if (JsonInputPath != null && !File.Exists(JsonInputPath.GetMetadata("FullPath")))
-            return Log.Error("JPE02", $"Specified {nameof(JsonInputPath)} not found at {JsonInputPath.GetMetadata("FullPath")}.");
+        if (ContentPath != null && !File.Exists(ContentPath.GetMetadata("FullPath")))
+            return Log.Error("JPE02", $"Specified {nameof(ContentPath)} not found at {ContentPath.GetMetadata("FullPath")}.");
 
-        if (JsonContent != null && JsonInputPath != null)
-            return Log.Error("JPE03", $"Cannot specify both {nameof(JsonContent)} and {nameof(JsonInputPath)}.");
+        if (Content != null && ContentPath != null)
+            return Log.Error("JPE03", $"Cannot specify both {nameof(Content)} and {nameof(ContentPath)}.");
 
-        var content = JsonInputPath != null ?
-            File.ReadAllText(JsonInputPath.GetMetadata("FullPath")) : JsonContent;
+        var content = ContentPath != null ?
+            File.ReadAllText(ContentPath.GetMetadata("FullPath")) : Content;
 
         if (string.IsNullOrEmpty(content))
             return Log.Warn("JPE04", $"Empty JSON content.", true);

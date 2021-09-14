@@ -6,8 +6,8 @@
 Usage:
 
 ```xml
-  <JsonPoke JsonInputPath="[JSON_FILE]" Query="[JSONPath]" Value="[VALUE]" />
-  <JsonPoke JsonInputPath="[JSON_FILE]" Query="[JSONPath]" RawValue="[JSON]" />
+  <JsonPoke ContentPath="[JSON_FILE]" Query="[JSONPath]" Value="[VALUE]" />
+  <JsonPoke ContentPath="[JSON_FILE]" Query="[JSONPath]" RawValue="[JSON]" />
 ```
 
 The `Value` can be an item group, and in that case, it will be inserted into the 
@@ -41,7 +41,7 @@ explicit quotes, the values would be interpreted as numbers otherwise):
     <HttpPort Include="'1080'" />
   </ItemGroup>
 
-  <JsonPoke JsonInputPath="http.json" Query="$.http.ports" Value="@(HttpPort)" />
+  <JsonPoke ContentPath="http.json" Query="$.http.ports" Value="@(HttpPort)" />
 ```
 
 Result:
@@ -68,7 +68,7 @@ It's also possible to write a complex object based on MSBuild item metadata:
      </Value>
    </ItemGroup>
 
-   <JsonPoke JsonInputPath="http.json" Query="$.http" Value="@(Http)" Properties="host;port;ssl" />
+   <JsonPoke ContentPath="http.json" Query="$.http" Value="@(Http)" Properties="host;port;ssl" />
 ```
 
 Result:

@@ -7,15 +7,15 @@
   </Target>
 
   <Target Name="FileNotFound" Label="Error:JPE02">
-    <JsonPeek JsonInputPath="Foo.json" Query="$.hello" />
+    <JsonPeek ContentPath="Foo.json" Query="$.hello" />
   </Target>
 
   <Target Name="FileAndContent" Label="Error:JPE03">
-    <JsonPeek JsonContent="{ }" JsonInputPath="empty.json" Query="$.hello" />
+    <JsonPeek Content="{ }" ContentPath="empty.json" Query="$.hello" />
   </Target>
 
   <Target Name="EmptyJson" Label="Warning:JPE04">
-    <JsonPeek JsonInputPath="empty.json" Query="$.hello" />
+    <JsonPeek ContentPath="empty.json" Query="$.hello" />
   </Target>
 
   <Target Name="PeekSimpleValue">
@@ -29,7 +29,7 @@
       <Expected>world</Expected>
     </PropertyGroup>
 
-    <JsonPeek JsonContent="$(Json)" Query="$(Query)">
+    <JsonPeek Content="$(Json)" Query="$(Query)">
       <Output TaskParameter="Result" PropertyName="Actual" />
     </JsonPeek>
     
@@ -37,7 +37,7 @@
   </Target>
 
   <Target Name="PeekFileValues">
-    <JsonPeek JsonInputPath="sample.json" Query="$.immutable">
+    <JsonPeek ContentPath="sample.json" Query="$.immutable">
       <Output TaskParameter="Result" PropertyName="Actual" />
     </JsonPeek>
     <Error Condition="'$(Actual)' != 'value'" Text="Expected 'value' but was $(Actual)" />
@@ -58,7 +58,7 @@
       <Expected>1;2;3</Expected>
     </PropertyGroup>
 
-    <JsonPeek JsonContent="$(Json)" Query="$(Query)">
+    <JsonPeek Content="$(Json)" Query="$(Query)">
       <Output TaskParameter="Result" ItemName="Actual" />
     </JsonPeek>
 
@@ -82,7 +82,7 @@
       </Json>
     </PropertyGroup>
 
-    <JsonPeek JsonContent="$(Json)" Query="$.http">
+    <JsonPeek Content="$(Json)" Query="$.http">
       <Output TaskParameter="Result" ItemName="Http" />
     </JsonPeek>
 
