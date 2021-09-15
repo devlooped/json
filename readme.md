@@ -22,6 +22,16 @@ Usage:
   </JsonPeek>
 ```
 
+
+Parameters:
+
+| Parameter   | Description                                                                                                    |
+| ----------- | -------------------------------------------------------------------------------------------------------------- |
+| Content     | Optional `string` parameter. Input/Output.<br/>Specifies the JSON input as a string.                           |
+| ContentPath | Optional `ITaskItem` parameter.<br/>Specifies the JSON input as a file path.                                   |
+| Query       | Required `string` parameter.<br/>Specifies the [JSONPath](https://goessner.net/articles/JsonPath/) expression. |
+| Result      | Output `ITaskItem[]` parameter.<br/>Contains the results that are returned by the task.                        |
+
 You can either provide the path to a JSON file via `ContentPath` or 
 provide the straight JSON content to `Content`. The `Query` is a 
 [JSONPath](https://goessner.net/articles/JsonPath/) expression that is evaluated 
@@ -32,7 +42,7 @@ for multiple results).
 JSON object properties are automatically projected as item metadata when 
 assigning the resulting value to an item. For example, given the following JSON:
 
-```json
+```JSON
 {
     "http": {
         "host": "localhost",
@@ -85,21 +95,79 @@ Usage:
 ```xml
   <JsonPoke ContentPath="[JSON_FILE]" Query="[JSONPath]" Value="[VALUE]" />
   <JsonPoke ContentPath="[JSON_FILE]" Query="[JSONPath]" RawValue="[JSON]" />
+  <JsonPoke Content="[JSON]" Query="[JSONPath]" Value="[VALUE]" />
 ```
+
+Parameters:
+
+| Parameter   | Description                                                                                                                                            |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Content     | Optional `string` input/output parameter.<br/>Specifies the JSON input as a string and contains the updated <br/>JSON after successful task execution. |
+| ContentPath | Optional `ITaskItem` parameter.<br/>Specifies the JSON input as a file path.                                                                           |
+| Query       | Required `string` parameter.<br/>Specifies the [JSONPath](https://goessner.net/articles/JsonPath/) expression.                                         |
+| Value       | Optional `ITaskItem[]` parameter.<br/>Specifies the value(s) to be inserted into the specified path.                                                   |
+| RawValue    | Optional `string` parameter.<br/>Specifies the raw (JSON) value to be inserted into the specified path.                                                |
+
+You must either provide the path to a JSON file via `ContentPath` or 
+raw JSON content via `Content`.
 
 The `Value` can be an item group, and in that case, it will be inserted into the 
 JSON node matching the [JSONPath](https://goessner.net/articles/JsonPath/) expression 
-`Query` as an array. RawValue can be used to provide 
+`Query` as an array. `RawValue` can be used to provide 
 an entire JSON fragment as a string, with no conversion to an MSBuild item at all.
 
 The existing JSON node will determine the data type of the value being written, 
 so as to preserve the original document. Numbers, booleans and DateTimes are 
-properly parsed before serializing to the node. To force a value to be interpreted 
-as a string, you can surround it with double or single quotes.
+properly parsed before serializing to the node. 
 
+```xml
+    <PropertyGroup>
+      <Json>
+{
+  "http": {
+    "host": "localhost",
+    "port": 80,
+    "ssl": true
+  }
+}
+      </Json>
+    </PropertyGroup>
+
+    <JsonPoke Content="$(Json)" Query="$.http.host" Value="example.com">
+      <Output TaskParameter="Content" PropertyName="Json" />
+    </JsonPoke>
+
+    <JsonPoke Content="$(Json)" Query="$.http.port" Value="80">
+      <Output TaskParameter="Content" PropertyName="Json" />
+    </JsonPoke>
+
+    <JsonPoke Content="$(Json)" Query="$.http.ssl" Value="true">
+      <Output TaskParameter="Content" PropertyName="Json" />
+    </JsonPoke>
+
+    <Message Importance="high" Text="$(Json)" />
+```
+
+Note how we update multiple values and assign the updated content to the 
+same `$(Json)` property so it can be used in subsequent updates. The last 
+`Message` task will render the following JSON:
+
+```JSON
+{
+  "http": {
+    "host": "example.com",
+    "port": 80,
+    "ssl": true
+  }
+}
+```
+
+> NOTE: The port number was preserved as a number, as is the `ssl` boolean.
+
+To force a value to be interpreted as a string, you can surround it with double or single quotes.
 For example, given the following JSON file:
 
-```json
+```JSON
 {
     "http": {
         "ports": [
@@ -123,7 +191,7 @@ explicit quotes, the values would be interpreted as numbers otherwise):
 
 Result:
 
-```json
+```JSON
 {
     "http": {
         "ports": [
@@ -150,7 +218,7 @@ It's also possible to write a complex object based on MSBuild item metadata:
 
 Result:
 
-```json
+```JSON
 {
     "http": {
         "host": "localhost",
