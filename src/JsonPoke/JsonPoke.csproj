@@ -6,6 +6,7 @@
     <Description>MSBuild task to write values to JSON nodes selected with JSONPath.</Description>
     <PackFolder>build</PackFolder>
     <PackNone>true</PackNone>
+    <PackageProjectUrl>https://clarius.org/json</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="all" />
     <PackageReference Include="NuGetizer" Version="0.7.4" />
     <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.9.20" Pack="false" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" PrivateAssets="all" />
