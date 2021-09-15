@@ -16,10 +16,6 @@
 
   <ItemGroup>
     <None Update="@(None)" PackFolder="$(PackFolder)" />
-    <None Update="readme.md">
-      <PackagePath>%(Filename)%(Extension)</PackagePath>
-      <PackFolder>$(PackFolder)</PackFolder>
-    </None>
   </ItemGroup>
 
 </Project>
