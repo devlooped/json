@@ -5,7 +5,7 @@
   <UsingTask AssemblyFile="JsonPoke.dll" TaskName="JsonPoke"/>
   <UsingTask AssemblyFile="JsonPeek.dll" TaskName="JsonPeek"/>
 
-  <Target Name="NoFile" Label="Error:MSB4044">
+  <Target Name="NoFileNorContent" Label="Error:JPO01">
     <JsonPoke Query="$.hello" />
   </Target>
 
@@ -13,14 +13,41 @@
     <JsonPoke ContentPath="Foo.json" Query="$.hello" />
   </Target>
 
-  <Target Name="EmptyJson" Label="Error:JPO03">
+  <Target Name="FileAndContent" Label="Error:JPO03">
+    <JsonPoke Content="{ }" ContentPath="empty.json" Query="$.hello" />
+  </Target>
+
+  <Target Name="EmptyJson" Label="Error:JPO04">
     <JsonPoke ContentPath="empty.json" Query="$.hello" />
   </Target>
 
-  <Target Name="NoValue" Label="Warning:JPO04">
+  <Target Name="NoValue" Label="Warning:JPO05">
     <JsonPoke ContentPath="sample.json" Query="$.hello" />
   </Target>
-  
+
+  <Target Name="ValueAndRawValue" Label="Error:JPO06">
+    <JsonPoke ContentPath="sample.json" Query="$.hello" Value="foo" RawValue="bar" />
+  </Target>
+
+  <Target Name="PokeContent">
+    <PropertyGroup>
+      <Query>$.hello</Query>
+      <Expected>goodbye</Expected>
+    </PropertyGroup>
+
+    <JsonPoke Content='{ "hello": "world" }' Query="$(Query)" Value="$(Expected)" >
+      <Output TaskParameter="Content" PropertyName="Content" />
+      <Output TaskParameter="Result" PropertyName="Actual" />
+    </JsonPoke>
+
+    <JsonPeek Content="$(Content)" Query="$(Query)">
+      <Output TaskParameter="Result" PropertyName="Actual" />
+    </JsonPeek>
+
+    <Error Condition="'$(Expected)' != '$(Actual)'" Text="Expected $(Expected) but was $(Actual)" />
+    <Message Importance="high" Text="$(Content)" />
+  </Target>
+
   <Target Name="PokeSimpleValue">
     <PropertyGroup>
       <Query>$.hello</Query>
@@ -221,7 +248,35 @@
     <JsonPoke ContentPath="sample.json" Query="$(Query)" Value="false">
       <Output TaskParameter="Result" ItemName="Changed" />
     </JsonPoke>
-    
+  </Target>
+
+  <Target Name="PokeContentJsonProperty">
+
+    <PropertyGroup>
+      <Json>
+{
+  "http": {
+    "host": "localhost",
+    "port": 80,
+    "ssl": true
+  }
+}
+      </Json>
+    </PropertyGroup>
+
+    <JsonPoke Content="$(Json)" Query="$.http.host" Value="example.com">
+      <Output TaskParameter="Content" PropertyName="Json" />
+    </JsonPoke>
+
+    <JsonPoke Content="$(Json)" Query="$.http.port" Value="80">
+      <Output TaskParameter="Content" PropertyName="Json" />
+    </JsonPoke>
+
+    <JsonPoke Content="$(Json)" Query="$.http.ssl" Value="true">
+      <Output TaskParameter="Content" PropertyName="Json" />
+    </JsonPoke>
+
+    <Message Importance="high" Text="$(Json)" />
   </Target>
 
 </Project>

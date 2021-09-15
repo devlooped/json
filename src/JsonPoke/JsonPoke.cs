@@ -14,13 +14,18 @@ using Newtonsoft.Json.Linq;
 public class JsonPoke : Task
 {
     /// <summary>
+    /// Specifies the JSON input as a string.
+    /// </summary>
+    [Output]
+    public string? Content { get; set; }
+
+    /// <summary>
     /// Specifies the JSON input as a file path.
     /// </summary>
-    [Required]
     public ITaskItem? ContentPath { get; set; }
 
     /// <summary>
-    /// Specifies the JSONPath query.
+    /// Specifies the JSONPath expression.
     /// </summary>
     [Required]
     public string Query { get; set; } = "$";
@@ -53,24 +58,26 @@ public class JsonPoke : Task
     /// </summary>
     public override bool Execute()
     {
-        if (ContentPath == null)
-            return Log.Error("JPO01", $"{nameof(ContentPath)} is required.");
+        if (Content == null && ContentPath == null)
+            return Log.Error("JPO01", $"Either {nameof(Content)} or {nameof(ContentPath)} must be provided.");
 
-        var filePath = ContentPath.GetMetadata("FullPath");
+        if (ContentPath != null && !File.Exists(ContentPath.GetMetadata("FullPath")))
+            return Log.Error("JPO02", $"Specified {nameof(ContentPath)} not found at {ContentPath.GetMetadata("FullPath")}.");
 
-        if (!File.Exists(filePath))
-            return Log.Error("JPO02", $"Specified {nameof(ContentPath)} not found at {filePath}.");
+        if (Content != null && ContentPath != null)
+            return Log.Error("JPO03", $"Cannot specify both {nameof(Content)} and {nameof(ContentPath)}.");
 
-        var content = File.ReadAllText(filePath);
+        var content = ContentPath != null ?
+            File.ReadAllText(ContentPath.GetMetadata("FullPath")) : Content;
 
         if (string.IsNullOrEmpty(content))
-            return Log.Error("JPO03", $"Empty JSON content.");
+            return Log.Error("JPO04", $"Empty JSON content.");
 
         if (Value.Length == 0 && RawValue == null)
-            return Log.Warn("JPO04", $"No value(s) specified.", true);
+            return Log.Warn("JPO05", $"No value(s) specified.", true);
 
         if (Value.Length > 0 && RawValue != null)
-            return Log.Error("JPO05", $"Cannot specify both {nameof(Value)} and {nameof(RawValue)}.");
+            return Log.Error("JPO06", $"Cannot specify both {nameof(Value)} and {nameof(RawValue)}.");
 
         var jvalue = new Lazy<JToken>(GetValue);
 
@@ -135,7 +142,10 @@ public class JsonPoke : Task
             AddResult(value, i);
         }
 
-        File.WriteAllText(filePath, json.ToString(Formatting.Indented));
+        Content = json.ToString(Formatting.Indented);
+        if (ContentPath != null)
+            File.WriteAllText(ContentPath.GetMetadata("FullPath"), Content);
+
         Result = result.ToArray();
 
         return true;

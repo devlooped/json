@@ -63,6 +63,10 @@ public record Tests(ITestOutputHelper Output)
             if (code != null)
                 Assert.Contains(code, logger.Warnings);
         }
+
+        Output.WriteLine(string.Join(Environment.NewLine, logger.Events.OfType<BuildMessageEventArgs>()
+            .Where(e => e.Importance == MessageImportance.High)
+            .Select(e => e.Message)));
     }
 
     public static IEnumerable<object?[]> GetTargets()
