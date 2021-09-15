@@ -5,34 +5,16 @@ using System.Linq;
 using System.Xml.Linq;
 using Microsoft.Build.Execution;
 using Microsoft.Build.Framework;
+using Microsoft.Build.Utilities;
 using Xunit;
 using Xunit.Abstractions;
 
 public record Tests(ITestOutputHelper Output)
 {
-    static HashSet<string> Restored = new();
-
     [Theory]
     [MemberData(nameof(GetTargets))]
     public void Run(string file, string name, bool failure = false, string? code = null)
     {
-        //if (!Restored.Contains(file))
-        //{
-        //    var log = new TestLogger();
-        //    Assert.Equal(BuildResultCode.Success, BuildManager.DefaultBuildManager.Build(
-        //        new BuildParameters
-        //        {
-        //            Loggers = new ILogger[] { log },
-        //            ResetCaches = true,
-        //        },
-        //        new BuildRequestData(
-        //            Path.Combine(Directory.GetCurrentDirectory(), file),
-        //            new Dictionary<string, string>(), null, new[] { "Restore" }, null))
-        //        .OverallResult);
-
-        //    Restored.Add(file);
-        //}
-
         var logger = new TestLogger();
         var result = BuildManager.DefaultBuildManager.Build(
             new BuildParameters
@@ -89,6 +71,20 @@ public record Tests(ITestOutputHelper Output)
 
                 yield return new object[] { Path.GetFileName(file), name, parts[0] == "Error", parts[1] };
             }
+        }
+    }
+
+    class TestLogger : Logger
+    {
+        public HashSet<string> Warnings { get; } = new();
+        public HashSet<string> Errors { get; } = new();
+        public List<BuildEventArgs> Events { get; } = new();
+
+        public override void Initialize(IEventSource eventSource)
+        {
+            eventSource.AnyEventRaised += (_, e) => Events.Add(e);
+            eventSource.ErrorRaised += (_, e) => Errors.Add(e.Code);
+            eventSource.WarningRaised += (_, e) => Warnings.Add(e.Code);
         }
     }
 }
