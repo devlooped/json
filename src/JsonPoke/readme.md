@@ -65,7 +65,7 @@ same `$(Json)` property so it can be used in subsequent updates. The last
 }
 ```
 
-> NOTE: The port number was preserved as a number, as is the `ssl` boolean.
+> NOTE: The `port` value is preserved as a number, as is the `ssl` boolean.
 
 To force a value to be interpreted as a string, you can surround it with double or single quotes.
 For example, given the following JSON file:
