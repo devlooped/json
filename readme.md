@@ -1,10 +1,11 @@
-![Icon](https://raw.githubusercontent.com/devlooped/json/main/assets/img/json.png) JsonPeek and JsonPoke MSBuild Tasks
+![JSON Icon](assets/img/json.png) JsonPeek and JsonPoke MSBuild Tasks
 ============
 
 [![License](https://img.shields.io/github/license/devlooped/json.svg?color=blue)](https://github.com/devlooped/json/blob/main/license.txt)
 [![Build](https://github.com/devlooped/json/workflows/build/badge.svg?branch=main)](https://github.com/devlooped/json/actions)
 
-# JsonPeek
+![JsonPeek Icon](assets/img/jsonpeek.png) JsonPeek
+============
 
 [![Version](https://img.shields.io/nuget/vpre/JsonPeek.svg?color=royalblue)](https://www.nuget.org/packages/JsonPeek)
 [![Downloads](https://img.shields.io/nuget/dt/JsonPeek.svg?color=green)](https://www.nuget.org/packages/JsonPeek)
@@ -85,7 +86,8 @@ These item metadata values could be read as MSBuild properties as follows, for e
 In addition to the explicitly opted in object properties, the entire node is available 
 as raw JSON via the special `_` (single underscore) metadata item.
 
-# JsonPoke
+![JsonPoke Icon](assets/img/jsonpoke.png) JsonPoke
+============
 
 Write values to JSON nodes selected with JSONPath
 
