@@ -22,9 +22,6 @@
 
   <ItemGroup>
     <None Update="@(None)" CopyToOutputDirectory="Always" />
-    <None Update="readme.md">
-      <PackFolder>$(PackFolder)</PackFolder>
-    </None>
   </ItemGroup>
 
 </Project>
