@@ -36,11 +36,11 @@ assigning the resulting value to an item. For example, given the following JSON:
 
 ```JSON
 {
-    "http": {
-        "host": "localhost",
-        "port": 80,
-        "ssl": true
-    }
+  "http": {
+    "host": "localhost",
+    "port": 80,
+    "ssl": true
+  }
 }
 ```
 
@@ -49,7 +49,7 @@ value with:
 
 ```xml
 <JsonPeek ContentPath="host.json" Query="$.http">
-    <Output TaskParameter="Result" ItemName="Http" />
+  <Output TaskParameter="Result" ItemName="Http" />
 </JsonPeek>
 ```
 
@@ -57,11 +57,11 @@ The `Http` item will have the following values (if it were declared in MSBuild):
 
 ```xml
 <ItemGroup>
-    <Http Include="[item raw json]">
-        <host>localhost</host>
-        <port>80</port>
-        <ssl>true</ssl>
-    </Http>
+  <Http Include="[item raw json]">
+    <host>localhost</host>
+    <port>80</port>
+    <ssl>true</ssl>
+  </Http>
 </ItemGroup>
 ```
 
@@ -69,9 +69,9 @@ These item metadata values could be read as MSBuild properties as follows, for e
 
 ```xml
 <PropertyGroup>
-    <Host>@(Http -> '%(host)')</Host>
-    <Port>@(Http -> '%(port)')</Port>
-    <Ssl>@(Http -> '%(ssl)')</Ssl>
+  <Host>@(Http -> '%(host)')</Host>
+  <Port>@(Http -> '%(port)')</Port>
+  <Ssl>@(Http -> '%(ssl)')</Ssl>
 </PropertyGroup>
 ```
 

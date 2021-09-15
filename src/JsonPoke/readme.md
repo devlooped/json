@@ -6,9 +6,9 @@
 Usage:
 
 ```xml
-  <JsonPoke ContentPath="[JSON_FILE]" Query="[JSONPath]" Value="[VALUE]" />
-  <JsonPoke ContentPath="[JSON_FILE]" Query="[JSONPath]" RawValue="[JSON]" />
-  <JsonPoke Content="[JSON]" Query="[JSONPath]" Value="[VALUE]" />
+<JsonPoke ContentPath="[JSON_FILE]" Query="[JSONPath]" Value="[VALUE]" />
+<JsonPoke ContentPath="[JSON_FILE]" Query="[JSONPath]" RawValue="[JSON]" />
+<JsonPoke Content="[JSON]" Query="[JSONPath]" Value="[VALUE]" />
 ```
 
 Parameters:
@@ -34,8 +34,8 @@ so as to preserve the original document. Numbers, booleans and DateTimes are
 properly parsed before serializing to the node. 
 
 ```xml
-    <PropertyGroup>
-      <Json>
+<PropertyGroup>
+    <Json>
 {
   "http": {
     "host": "localhost",
@@ -43,22 +43,22 @@ properly parsed before serializing to the node.
     "ssl": true
   }
 }
-      </Json>
-    </PropertyGroup>
+    </Json>
+</PropertyGroup>
 
-    <JsonPoke Content="$(Json)" Query="$.http.host" Value="example.com">
-      <Output TaskParameter="Content" PropertyName="Json" />
-    </JsonPoke>
+<JsonPoke Content="$(Json)" Query="$.http.host" Value="example.com">
+  <Output TaskParameter="Content" PropertyName="Json" />
+</JsonPoke>
 
-    <JsonPoke Content="$(Json)" Query="$.http.port" Value="80">
-      <Output TaskParameter="Content" PropertyName="Json" />
-    </JsonPoke>
+<JsonPoke Content="$(Json)" Query="$.http.port" Value="80">
+  <Output TaskParameter="Content" PropertyName="Json" />
+</JsonPoke>
 
-    <JsonPoke Content="$(Json)" Query="$.http.ssl" Value="true">
-      <Output TaskParameter="Content" PropertyName="Json" />
-    </JsonPoke>
+<JsonPoke Content="$(Json)" Query="$.http.ssl" Value="true">
+  <Output TaskParameter="Content" PropertyName="Json" />
+</JsonPoke>
 
-    <Message Importance="high" Text="$(Json)" />
+<Message Importance="high" Text="$(Json)" />
 ```
 
 Note how we update multiple values and assign the updated content to the 
@@ -94,50 +94,50 @@ We can replace the `ports` array with string values as follows (without the
 explicit quotes, the values would be interpreted as numbers otherwise):
 
 ```xml
-  <ItemGroup>
-    <HttpPort Include="'8080'" />
-    <HttpPort Include="'1080'" />
-  </ItemGroup>
+<ItemGroup>
+  <HttpPort Include="'8080'" />
+  <HttpPort Include="'1080'" />
+</ItemGroup>
 
-  <JsonPoke ContentPath="http.json" Query="$.http.ports" Value="@(HttpPort)" />
+<JsonPoke ContentPath="http.json" Query="$.http.ports" Value="@(HttpPort)" />
 ```
 
 Result:
 
 ```JSON
 {
-    "http": {
-        "ports": [
-            "8080", 
-            "1080"
-        ]
-    }
+  "http": {
+    "ports": [
+      "8080", 
+      "1080"
+    ]
+  }
 }
 ```
 
 It's also possible to write a complex object based on MSBuild item metadata: 
 
 ```xml
-   <ItemGroup>
-     <Http Include="Value">
-       <host>localhost</host>
-       <port>80</port>
-       <ssl>true</ssl>
-     </Value>
-   </ItemGroup>
+<ItemGroup>
+  <Http Include="Value">
+    <host>localhost</host>
+    <port>80</port>
+    <ssl>true</ssl>
+  </Value>
+</ItemGroup>
 
-   <JsonPoke ContentPath="http.json" Query="$.http" Value="@(Http)" Properties="host;port;ssl" />
+<JsonPoke ContentPath="http.json" Query="$.http" Value="@(Http)" Properties="host;port;ssl" />
 ```
 
 Result:
 
 ```JSON
 {
-    "http": {
-        "host": "localhost",
-        "port": 80,
-        "ssl": true
-    }
+  "http": {
+    "host": "localhost",
+    "port": 80,
+    "ssl": true
+  }
 }
 ```
 
