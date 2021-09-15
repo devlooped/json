@@ -1,5 +1,13 @@
 
 
+## [v1.0.2-alpha](https://github.com/devlooped/json/tree/v1.0.2-alpha) (2021-09-15)
+
+[Full Changelog](https://github.com/devlooped/json/compare/v1.0.1...v1.0.2-alpha)
+
+:sparkles: Implemented enhancements:
+
+- Return full node JSON as metadata for returned complex objects [\#4](https://github.com/devlooped/json/issues/4)
+
 ## [v1.0.1](https://github.com/devlooped/json/tree/v1.0.1) (2021-09-15)
 
 [Full Changelog](https://github.com/devlooped/json/compare/v1.0.0...v1.0.1)
