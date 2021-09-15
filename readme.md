@@ -82,6 +82,9 @@ These item metadata values could be read as MSBuild properties as follows, for e
 </PropertyGroup>
 ```
 
+In addition to the explicitly opted in object properties, the entire node is available 
+as raw JSON via the special `_` (single underscore) metadata item.
+
 # JsonPoke
 
 Write values to JSON nodes selected with JSONPath

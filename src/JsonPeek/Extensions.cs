@@ -23,8 +23,8 @@ static class Extensions
 
     public static IEnumerable<ITaskItem> AsItems(this JToken json) => json switch
     {
-        { Type: JTokenType.Object } when json is JObject obj => new ITaskItem[] { obj.AsItem() },
-        { Type: JTokenType.Array } when json is JArray arr => arr.SelectMany(AsItems),
+        JObject complex => new ITaskItem[] { complex.AsItem() },
+        JArray array => array.SelectMany(AsItems),
         { Type: JTokenType.Null } => Array.Empty<ITaskItem>(),
         _ => new ITaskItem[] { new TaskItem(json.AsString()) },
     };
@@ -48,6 +48,8 @@ static class Extensions
         // Top-level properties turned into metadata for convenience.
         foreach (var prop in json.Properties())
             item.SetMetadata(prop.Name, prop.Value.AsString());
+
+        item.SetMetadata("_", json.AsString());
 
         return item;
     }
