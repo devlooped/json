@@ -1,24 +1,16 @@
 
 
+## [v1.0.1](https://github.com/devlooped/json/tree/v1.0.1) (2021-09-15)
+
+[Full Changelog](https://github.com/devlooped/json/compare/v1.0.0...v1.0.1)
+
+:sparkles: Implemented enhancements:
+
+- Add missing repository information [\#3](https://github.com/devlooped/json/issues/3)
+
 ## [v1.0.0](https://github.com/devlooped/json/tree/v1.0.0) (2021-09-15)
 
-[Full Changelog](https://github.com/devlooped/json/compare/v1.0.0-rc.1...v1.0.0)
-
-## [v1.0.0-rc.1](https://github.com/devlooped/json/tree/v1.0.0-rc.1) (2021-09-15)
-
-[Full Changelog](https://github.com/devlooped/json/compare/v1.0.0-rc...v1.0.0-rc.1)
-
-## [v1.0.0-rc](https://github.com/devlooped/json/tree/v1.0.0-rc) (2021-09-14)
-
-[Full Changelog](https://github.com/devlooped/json/compare/v1.0.0-beta...v1.0.0-rc)
-
-## [v1.0.0-beta](https://github.com/devlooped/json/tree/v1.0.0-beta) (2021-09-14)
-
-[Full Changelog](https://github.com/devlooped/json/compare/v1.0.0-alpha...v1.0.0-beta)
-
-## [v1.0.0-alpha](https://github.com/devlooped/json/tree/v1.0.0-alpha) (2021-09-14)
-
-[Full Changelog](https://github.com/devlooped/json/compare/12e1a266ac3c49826b58e2d02935cfb6c87e1ae1...v1.0.0-alpha)
+[Full Changelog](https://github.com/devlooped/json/compare/12e1a266ac3c49826b58e2d02935cfb6c87e1ae1...v1.0.0)
 
 
 
