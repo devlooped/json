@@ -14,16 +14,6 @@ Usage:
   </JsonPeek>
 ```
 
-
-Parameters:
-
-| Parameter   | Description                                                                                                    |
-| ----------- | -------------------------------------------------------------------------------------------------------------- |
-| Content     | Optional `string` parameter. Input/Output.<br/>Specifies the JSON input as a string.                           |
-| ContentPath | Optional `ITaskItem` parameter.<br/>Specifies the JSON input as a file path.                                   |
-| Query       | Required `string` parameter.<br/>Specifies the [JSONPath](https://goessner.net/articles/JsonPath/) expression. |
-| Result      | Output `ITaskItem[]` parameter.<br/>Contains the results that are returned by the task.                        |
-
 You can either provide the path to a JSON file via `ContentPath` or 
 provide the straight JSON content to `Content`. The `Query` is a 
 [JSONPath](https://goessner.net/articles/JsonPath/) expression that is evaluated 
@@ -75,6 +65,14 @@ These item metadata values could be read as MSBuild properties as follows, for e
 </PropertyGroup>
 ```
 
+## Parameters
+
+| Parameter   | Description                                                                                                    |
+| ----------- | -------------------------------------------------------------------------------------------------------------- |
+| Content     | Optional `string` parameter.<br/>Specifies the JSON input as a string.                                         |
+| ContentPath | Optional `ITaskItem` parameter.<br/>Specifies the JSON input as a file path.                                   |
+| Query       | Required `string` parameter.<br/>Specifies the [JSONPath](https://goessner.net/articles/JsonPath/) expression. |
+| Result      | Output `ITaskItem[]` parameter.<br/>Contains the results that are returned by the task.                        |
 
 ## Sponsors
 

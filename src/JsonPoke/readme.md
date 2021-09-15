@@ -11,16 +11,6 @@ Usage:
 <JsonPoke Content="[JSON]" Query="[JSONPath]" Value="[VALUE]" />
 ```
 
-Parameters:
-
-| Parameter   | Description                                                                                                                                            |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Content     | Optional `string` input/output parameter.<br/>Specifies the JSON input as a string and contains the updated <br/>JSON after successful task execution. |
-| ContentPath | Optional `ITaskItem` parameter.<br/>Specifies the JSON input as a file path.                                                                           |
-| Query       | Required `string` parameter.<br/>Specifies the [JSONPath](https://goessner.net/articles/JsonPath/) expression.                                         |
-| Value       | Optional `ITaskItem[]` parameter.<br/>Specifies the value(s) to be inserted into the specified path.                                                   |
-| RawValue    | Optional `string` parameter.<br/>Specifies the raw (JSON) value to be inserted into the specified path.                                                |
-
 You must either provide the path to a JSON file via `ContentPath` or 
 raw JSON content via `Content`.
 
@@ -148,6 +138,16 @@ values in double or single quotes to force them to be written as strings instead
 The modified JSON nodes can be assigned to an item name using the `Result` task property, 
 and will contain the item path (matching the `Query` plus the index if multiple nodes were modified) 
 as well as the `Value` item metadata containing the raw JSON that was written.
+
+## Parameters
+
+| Parameter   | Description                                                                                                                                            |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Content     | Optional `string` input/output parameter.<br/>Specifies the JSON input as a string and contains the updated <br/>JSON after successful task execution. |
+| ContentPath | Optional `ITaskItem` parameter.<br/>Specifies the JSON input as a file path.                                                                           |
+| Query       | Required `string` parameter.<br/>Specifies the [JSONPath](https://goessner.net/articles/JsonPath/) expression.                                         |
+| Value       | Optional `ITaskItem[]` parameter.<br/>Specifies the value(s) to be inserted into the specified path.                                                   |
+| RawValue    | Optional `string` parameter.<br/>Specifies the raw (JSON) value to be inserted into the specified path.                                                |
 
 ## Sponsors
 

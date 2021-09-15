@@ -22,14 +22,13 @@ Usage:
   </JsonPeek>
 ```
 
-
 Parameters:
 
 | Parameter   | Description                                                                                                    |
 | ----------- | -------------------------------------------------------------------------------------------------------------- |
 | Content     | Optional `string` parameter. Input/Output.<br/>Specifies the JSON input as a string.                           |
-| ContentPath | Optional `ITaskItem` parameter.<br/>Specifies the JSON input as a file path.                                   |
-| Query       | Required `string` parameter.<br/>Specifies the [JSONPath](https://goessner.net/articles/JsonPath/) expression. |
+| ContentPath | Optional `ITaskItem`Â parameter.<br/>Specifies the JSON input as a file path.                                   |
+| Query       | Required `string`Â parameter.<br/>Specifies the [JSONPath](https://goessner.net/articles/JsonPath/)Â expression. |
 | Result      | Output `ITaskItem[]` parameter.<br/>Contains the results that are returned by the task.                        |
 
 You can either provide the path to a JSON file via `ContentPath` or 
@@ -100,13 +99,13 @@ Usage:
 
 Parameters:
 
-| Parameter   | Description                                                                                                                                            |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Content     | Optional `string` input/output parameter.<br/>Specifies the JSON input as a string and contains the updated <br/>JSON after successful task execution. |
-| ContentPath | Optional `ITaskItem` parameter.<br/>Specifies the JSON input as a file path.                                                                           |
-| Query       | Required `string` parameter.<br/>Specifies the [JSONPath](https://goessner.net/articles/JsonPath/) expression.                                         |
-| Value       | Optional `ITaskItem[]` parameter.<br/>Specifies the value(s) to be inserted into the specified path.                                                   |
-| RawValue    | Optional `string` parameter.<br/>Specifies the raw (JSON) value to be inserted into the specified path.                                                |
+| Parameter   | Description                                                                                                                                           |
+| ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Content     | Optional `string` input/output parameter.<br/>Specifies the JSON input as a string and contains the updated<br/>JSON after successful task execution. |
+| ContentPath | Optional `ITaskItem`Â parameter.<br/>Specifies the JSON input as a file path.                                                                          |
+| Query       | Required `string`Â parameter.<br/>Specifies the [JSONPath](https://goessner.net/articles/JsonPath/)Â expression.                                        |
+| Value       | Optional `ITaskItem[]` parameter.<br/>Specifies the value(s) to be inserted into the specified path.                                                  |
+| RawValue    | Optional `string` parameter.<br/>Specifies the raw (JSON) value to be inserted into the specified path.                                               |
 
 You must either provide the path to a JSON file via `ContentPath` or 
 raw JSON content via `Content`.
@@ -236,7 +235,6 @@ The modified JSON nodes can be assigned to an item name using the `Result` task 
 and will contain the item path (matching the `Query` plus the index if multiple nodes were modified) 
 as well as the `Value` item metadata containing the raw JSON that was written.
 
-
 # Dogfooding
 
 [![CI Version](https://img.shields.io/endpoint?url=https://shields.kzu.io/vpre/JsonPeek/main&label=nuget.ci&color=brightgreen)](https://pkg.kzu.io/index.json)
@@ -250,8 +248,6 @@ The versioning scheme for packages is:
 
 - PR builds: *42.42.42-pr*`[NUMBER]`
 - Branch builds: *42.42.42-*`[BRANCH]`.`[COMMITS]`
-
-
 
 ## Sponsors
 
