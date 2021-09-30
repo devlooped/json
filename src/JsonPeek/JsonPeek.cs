@@ -20,6 +20,14 @@ public class JsonPeek : Task
     public ITaskItem? ContentPath { get; set; }
 
     /// <summary>
+    /// Specifies an optional value to use as a replacement for 
+    /// empty values matched in JSON. This allows distinguishing 
+    /// non-matching queries versus queries that match nodes but 
+    /// contain an empty value.
+    /// </summary>
+    public string? Empty { get; set; }
+
+    /// <summary>
     /// Specifies the JSONPath query.
     /// </summary>
     [Required]
@@ -57,6 +65,7 @@ public class JsonPeek : Task
         Result = json.SelectTokens(Query)
             // NOTE: we cannot create items with empty ItemSpec, so skip them entirely.
             // see https://github.com/dotnet/msbuild/issues/3399
+            .Select(x => !string.IsNullOrEmpty(x.ToString()) ? x : Empty)
             .Where(x => !string.IsNullOrEmpty(x.ToString()))
             .SelectMany(x => x.AsItems()).ToArray();
 
