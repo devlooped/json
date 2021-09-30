@@ -38,6 +38,70 @@
     <Error Condition="'$(Expected)' != '$(Actual)'" Text="Expected $(Expected) but was $(Actual)" />
   </Target>
 
+  <Target Name="PeekEmptyValue">
+    <PropertyGroup>
+      <Json>
+        {
+          "hello": ""
+        }
+      </Json>
+      <Query>$.hello</Query>
+      <Expected></Expected>
+    </PropertyGroup>
+
+    <JsonPeek Content="$(Json)" Query="$(Query)">
+      <Output TaskParameter="Result" PropertyName="Actual" />
+    </JsonPeek>
+
+    <JsonPeek Content="$(Json)" Query="$(Query)">
+      <Output TaskParameter="Result" ItemName="Actual" />
+    </JsonPeek>
+
+    <Error Condition="'$(Expected)' != '$(Actual)'" Text="Expected $(Expected) but was $(Actual)" />
+    <Error Condition="@(Actual -> Count()) != 0" Text="Expected @(Actual) to be empty" />
+  </Target>
+
+  <Target Name="PeekEmptyNonDefaultValue">
+    <PropertyGroup>
+      <Json>
+        {
+        "hello": ""
+        }
+      </Json>
+      <Query>$.hello</Query>
+      <Expected>$empty</Expected>
+    </PropertyGroup>
+
+    <JsonPeek Content="$(Json)" Empty="$empty" Query="$(Query)">
+      <Output TaskParameter="Result" PropertyName="Actual" />
+    </JsonPeek>
+
+    <JsonPeek Content="$(Json)" Empty="$empty" Query="$(Query)">
+      <Output TaskParameter="Result" ItemName="Actual" />
+    </JsonPeek>
+
+    <Error Condition="'$(Expected)' != '$(Actual)'" Text="Expected $(Expected) but was $(Actual)" />
+    <Error Condition="@(Actual -> Count()) != 1" Text="Expected @(Actual) to have one item" />
+  </Target>
+
+  <Target Name="PeekNotFoundNonDefaultValue">
+    <PropertyGroup>
+      <Json>
+        {
+        "hello": ""
+        }
+      </Json>
+      <Query>$.foo</Query>
+      <Expected></Expected>
+    </PropertyGroup>
+
+    <JsonPeek Content="$(Json)" Empty="$empty" Query="$(Query)">
+      <Output TaskParameter="Result" PropertyName="Actual" />
+    </JsonPeek>
+
+    <Error Condition="'$(Expected)' != '$(Actual)'" Text="Expected $(Expected) but was $(Actual)" />
+  </Target>
+
   <Target Name="PeekFileValues">
     <JsonPeek ContentPath="sample.json" Query="$.immutable">
       <Output TaskParameter="Result" PropertyName="Actual" />
