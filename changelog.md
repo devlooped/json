@@ -1,5 +1,13 @@
 
 
+## [v1.0.3](https://github.com/devlooped/json/tree/v1.0.3) (2021-09-30)
+
+[Full Changelog](https://github.com/devlooped/json/compare/v1.0.2...v1.0.3)
+
+:twisted_rightwards_arrows: Merged:
+
+- Allow specifying a replacement value for empty results [\#8](https://github.com/devlooped/json/pull/8) (@kzu)
+
 ## [v1.0.2](https://github.com/devlooped/json/tree/v1.0.2) (2021-09-15)
 
 [Full Changelog](https://github.com/devlooped/json/compare/v1.0.1...v1.0.2)
