@@ -6,11 +6,160 @@ using System.Xml.Linq;
 using Microsoft.Build.Execution;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
+using Newtonsoft.Json.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
 public record Tests(ITestOutputHelper Output)
 {
+    [Fact]
+    public void AddObjectPath()
+    {
+        var poke = new JsonPoke
+        {
+            Content = @"{ ""profiles"": { } }",
+            Query = "$.profiles['Foo.cs'].commandName",
+            RawValue = "'Project'",
+        };
+
+        Assert.True(poke.Execute());
+
+        dynamic obj = JObject.Parse(poke.Content);
+        string? value = obj?.profiles?["Foo.cs"]?.commandName;
+
+        Assert.Equal("Project", value);
+    }
+
+    [Fact]
+    public void AddArrayElement()
+    {
+        var poke = new JsonPoke
+        {
+            Content = @"{ ""values"": [] }",
+            Query = "$.values[0].commandName",
+            RawValue = "'Project'",
+        };
+
+        Assert.True(poke.Execute());
+
+        poke.Query = "$.values[1].commandName";
+
+        Assert.True(poke.Execute());
+
+        dynamic obj = JObject.Parse(poke.Content);
+
+        Assert.Equal("Project", (string?)obj?.values?[0]?.commandName);
+        Assert.Equal("Project", (string?)obj?.values?[1]?.commandName);
+    }
+
+    [Fact]
+    public void AddLastArrayElement()
+    {
+        var poke = new JsonPoke
+        {
+            Content = @"{ ""values"": [ ""foo"", ""bar"" ] }",
+            Query = "$.values[^1]",
+            RawValue = "'baz'",
+        };
+
+        Assert.True(poke.Execute());
+
+        poke.Query = "$.values[^1]";
+
+        Assert.True(poke.Execute());
+
+        dynamic obj = JObject.Parse(poke.Content);
+
+        Assert.Equal("baz", (string?)obj?.values?[2]);
+        Assert.Equal("baz", (string?)obj?.values?[3]);
+    }
+
+    [Fact]
+    public void AddMiddleArrayElement()
+    {
+        var poke = new JsonPoke
+        {
+            Content = @"{ ""values"": [ ""foo"", ""bar"" ] }",
+            Query = "$.values[1]",
+            RawValue = "'baz'",
+        };
+
+        Assert.True(poke.Execute());
+
+        dynamic obj = JObject.Parse(poke.Content);
+
+        Assert.Equal("baz", (string?)obj?.values?[1]);
+    }
+
+    [Fact]
+    public void AddMiddleArrayElementFromEnd()
+    {
+        var poke = new JsonPoke
+        {
+            Content = @"{ ""values"": [ { }, { } ] }",
+            Query = "$.values[^2].data",
+            RawValue = "'baz'",
+        };
+
+        Assert.True(poke.Execute());
+
+        dynamic obj = JObject.Parse(poke.Content);
+
+        Assert.Equal("baz", (string?)obj?.values?[1]?.data);
+    }
+
+    [Fact]
+    public void AddLastArrayElementWithEmptyArray()
+    {
+        var poke = new JsonPoke
+        {
+            Content = @"{ ""values"": [ ] }",
+            Query = "$.values[^1]",
+            RawValue = "'baz'",
+        };
+
+        Assert.True(poke.Execute());
+
+        dynamic obj = JObject.Parse(poke.Content);
+
+        Assert.Equal("baz", (string?)obj?.values?[0]);
+    }
+
+    [Fact]
+    public void AddLastArrayElementWithNoArray()
+    {
+        var poke = new JsonPoke
+        {
+            Content = @"{ }",
+            Query = "$.values[^1]",
+            RawValue = "'baz'",
+        };
+
+        Assert.True(poke.Execute());
+
+        dynamic obj = JObject.Parse(poke.Content);
+
+        Assert.Equal("baz", (string?)obj?.values?[0]);
+    }
+
+    [Fact]
+    public void AddObjectArray()
+    {
+        var poke = new JsonPoke
+        {
+            Content = @"{ }",
+            Query = "$.foo[0].bar[0].baz",
+            RawValue = "'yay'",
+        };
+
+        Assert.True(poke.Execute());
+
+        dynamic obj = JObject.Parse(poke.Content);
+        string? value = obj?.foo?[0]?.bar?[0]?.baz;
+
+        Assert.Equal("yay", value);
+    }
+
     [Theory]
     [MemberData(nameof(GetTargets))]
     public void Run(string file, string name, bool failure = false, string? code = null)

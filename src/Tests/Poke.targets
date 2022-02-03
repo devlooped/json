@@ -215,6 +215,40 @@
     <Error Condition="'$(Expected)' != '$(Actual)'" Text="Expected $(Expected) but was $(Actual)" />
   </Target>
 
+  <Target Name="PokeObjectCreatesHierarchy">
+    <PropertyGroup>
+      <Query>$.foo.bar.baz</Query>
+      <Expected>yay</Expected>
+    </PropertyGroup>
+
+    <JsonPoke ContentPath="sample.json" Query="$(Query)" Value="$(Expected)">
+      <Output TaskParameter="Result" ItemName="JObject" />
+    </JsonPoke>
+
+    <JsonPeek ContentPath="sample.json" Query="$(Query)">
+      <Output TaskParameter="Result" PropertyName="Actual" />
+    </JsonPeek>
+
+    <Error Condition="'$(Expected)' != '$(Actual)'" Text="Expected $(Expected) but was $(Actual)" />
+  </Target>
+
+  <Target Name="PokeArrayCreatesHierarchy">
+    <PropertyGroup>
+      <Query>$.baz[0].bar[0].foo</Query>
+      <Expected>yay</Expected>
+    </PropertyGroup>
+
+    <JsonPoke ContentPath="sample.json" Query="$(Query)" Value="$(Expected)">
+      <Output TaskParameter="Result" ItemName="JObject" />
+    </JsonPoke>
+
+    <JsonPeek ContentPath="sample.json" Query="$(Query)">
+      <Output TaskParameter="Result" PropertyName="Actual" />
+    </JsonPeek>
+
+    <Error Condition="'$(Expected)' != '$(Actual)'" Text="Expected $(Expected) but was $(Actual)" />
+  </Target>
+
   <Target Name="PokeObjectValue">
     <PropertyGroup>
       <Query>$.object</Query>
