@@ -1,10 +1,23 @@
+# Changelog
 
+## [v1.1.0-alpha](https://github.com/devlooped/json/tree/v1.1.0-alpha) (2022-02-03)
+
+[Full Changelog](https://github.com/devlooped/json/compare/v1.0.3...v1.1.0-alpha)
+
+:sparkles: Implemented enhancements:
+
+- Auto-create object hierarchies and arrays [\#16](https://github.com/devlooped/json/issues/16)
+- Allow specifying a replacement value for empty results [\#7](https://github.com/devlooped/json/issues/7)
+
+:twisted_rightwards_arrows: Merged:
+
+- Auto-create object hierarchies and arrays [\#17](https://github.com/devlooped/json/pull/17) (@kzu)
 
 ## [v1.0.3](https://github.com/devlooped/json/tree/v1.0.3) (2021-09-30)
 
 [Full Changelog](https://github.com/devlooped/json/compare/v1.0.2...v1.0.3)
 
-:twisted_rightwards_arrows: Merged:
+:sparkles: Implemented enhancements:
 
 - Allow specifying a replacement value for empty results [\#8](https://github.com/devlooped/json/pull/8) (@kzu)
 
