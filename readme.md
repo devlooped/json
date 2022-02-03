@@ -252,6 +252,80 @@ Note how the native JSON type was automatically inferred, even though everything
 basically a string in MSBuild. As noted above, you can surround any of the item metadata 
 values in double or single quotes to force them to be written as strings instead.
 
+The task can create entire object hierarchies if any segment of the path expression is 
+not found, which makes it very easy to create complex structures by assigning a single 
+value. For example, if the `http` section in the examples above didn't exist at all, 
+the following task would add it automatically, prior to assigning the `ssl` property to `true`:
+
+```xml
+<JsonPoke ContentPath="http.json" Query="$.http.ssl" Value="true" />
+```
+
+This also works for indexed queries, such as adding launch profile to 
+[launchSettings.json](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments?view=aspnetcore-6.0#lsj) 
+by simply assigning a value:
+
+```xml
+<JsonPoke ContentPath="Properties\launchSettings.json" Query="$.profiles['IIS Express'].commandName" Value="IISExpress" />
+```
+
+which would create the following entry:
+
+```json
+{
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+    }
+  }
+}
+```
+
+Array index is also supported as part of the query, to modify existing values. If the array is empty 
+or non-existent, it's also possible to just use the index `[0]` to denote the new node should be the 
+sole element in the new array, like for adding a new watch file value to 
+[host.json](https://docs.microsoft.com/en-us/azure/azure-functions/functions-host-json):
+
+```xml
+<JsonPoke ContentPath="host.json" Query="$.watchFiles[0]" Value="myFile.txt" />
+```
+
+Which results in:
+
+```json
+{
+  ...
+  "watchFiles": [ "myFile.txt" ]
+}
+```
+
+It's quite common to want to add entries to an existing array, usually at the end of the array. The 
+JSONPath syntax supports indexes that start from the end of the array (such as `[-1:]`), but if the 
+array had any values already, that would match whichever is the last element, meaning in an *update* 
+to that element's value. Since we need a different syntax for *inserting* a new node, starting from 
+the end of the list, we leverage the C# syntax `^n` where `n` is the position starting from the end. 
+To add a new element at the end of the list, the index `[^1]` can be used. `^2` means prior to last
+and so on.
+
+For example, to *add* a new watched file to the array in the example above, we could use:
+
+```xml
+<JsonPoke ContentPath="host.json" Query="$.watchFiles[^1]" Value="myOtherFile.txt" />
+```
+
+Given an existing `host.json` file like the one above, we would get a new file added like so:
+
+```json
+{
+  ...
+  "watchFiles": [ "myFile.txt", "myOtherFile.txt" ]
+}
+```
+
+If the `watchFiles` property didn't exit at all or had no elements, the result would be 
+the same as if we used `[0]`, but this makes the code more flexible if needed.
+
+
 The modified JSON nodes can be assigned to an item name using the `Result` task property, 
 and will contain the item path (matching the `Query` plus the index if multiple nodes were modified) 
 as well as the `Value` item metadata containing the raw JSON that was written.

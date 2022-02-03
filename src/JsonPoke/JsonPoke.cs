@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using Newtonsoft.Json;
@@ -13,6 +14,8 @@ using Newtonsoft.Json.Linq;
 /// </summary>
 public class JsonPoke : Task
 {
+    static readonly Regex JPathExpr = new(@"(?<property>\['(?<name>[^\]]+)'\])|(?<property>\.(?<name>[^\.\[]+))|(?<array>\[(?<end>\^)?(?<index>\d+)\])", RegexOptions.Compiled);
+
     /// <summary>
     /// Specifies the JSON input as a string.
     /// </summary>
@@ -82,8 +85,97 @@ public class JsonPoke : Task
         var jvalue = new Lazy<JToken>(GetValue);
 
         var json = JObject.Parse(content!);
-        var nodes = json.SelectTokens(Query).ToList();
+        var matches = JPathExpr.Matches(Query).Cast<Match>().ToList();
+        // If we have any part of teh expression using our own "from end" syntax for array indexing, 
+        // we know we'll be inserting a *new* 
+        var nodes = matches.Any(m => m.Groups["end"].Success) ? new() : json.SelectTokens(Query).ToList();
         var result = new List<ITaskItem>();
+        var owned = new HashSet<string>();
+
+        // We couldn't match anything to Query, so attempt to 
+        // create an object at the specified path.
+        if (nodes.Count == 0)
+        {
+            // If we can't match anything, we can't create any objects.
+            if (matches.Count == 0)
+                return true;
+
+            // Split paths, try to match sequentially, can't do wildcards as final segment
+            for (var midx = 0; midx < matches.Count; midx++)
+            {
+                var match = matches[midx];
+                var parent = json.SelectToken(Query[..match.Index]);
+                var token = match.Groups["end"].Success ? null : json.SelectToken(Query[..(match.Index + match.Length)]);
+                if (token != null)
+                    continue;
+
+                if (parent == null)
+                    return Log.Error("JPO07", $"Could not find parent node for {Query[..match.Index]}.");
+
+                // For arrays, if we don't find the element, create/add it if we can
+                if (match.Groups["array"].Success)
+                {
+                    if (parent is not JArray array)
+                    {
+                        // We own the node (meaning we created it previously), so we can replace it with an array instead.
+                        if (owned.Contains(Query[..match.Index]))
+                        {
+                            array = new JArray();
+                            parent.Replace(array);
+                        }
+                        else
+                        {
+                            return Log.Warn("JPO08", $"JSONPath segment '{Query[..match.Index]}' didn't match a JSON array.");
+                        }
+                    }
+
+                    if (match.Groups["index"].Success)
+                    {
+                        var index = int.Parse(match.Groups["index"].Value, CultureInfo.InvariantCulture);
+                        if (match.Groups["end"].Success)
+                        {
+                            index = array.Count + 1 - index;
+                            // In this case, we'll be changing the index value, so we'll need 
+                            // to replace the query and matches for subsequent segments.
+                            Query = Query[..match.Index] + "[" + index + "]" + Query[(match.Index + match.Length)..];
+                            matches = JPathExpr.Matches(Query).Cast<Match>().ToList();
+                            match = matches[midx];
+                        }
+
+                        if (index >= 0 && index <= array.Count)
+                        {
+                            // We can simply add the new object at the given index.
+                            token = new JObject();
+                            array.Insert(index, token);
+                            owned.Add(Query[..(match.Index + match.Length)]);
+                        }
+                        else
+                        {
+                            return Log.Warn("JPO09", $"JSONPath index {index} out of range.");
+                        }
+                    }
+                    else
+                    {
+                        return Log.Warn("JPO10", $"JSONPath array index not specified.");
+                    }
+                }
+                else
+                {
+                    // If parent is not an object, we can't set a property on it.
+                    if (parent is not JObject obj)
+                        return Log.Warn("JPO11", $"JSONPath segment '{Query[..match.Index]}' didn't match a JSON object.");
+
+                    token = new JProperty(match.Groups["name"].Value, new JObject());
+                    owned.Add(Query[..(match.Index + match.Length)]);
+                    obj.Add(token);
+                }
+
+                if (token == null)
+                    return false;
+            }
+        }
+
+        nodes = json.SelectTokens(Query).ToList();
 
         void AddResult(JToken node, int index)
         {
