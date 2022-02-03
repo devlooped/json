@@ -1,8 +1,8 @@
 # Changelog
 
-## [v1.1.0-alpha](https://github.com/devlooped/json/tree/v1.1.0-alpha) (2022-02-03)
+## [v1.1.0](https://github.com/devlooped/json/tree/v1.1.0) (2022-02-03)
 
-[Full Changelog](https://github.com/devlooped/json/compare/v1.0.3...v1.1.0-alpha)
+[Full Changelog](https://github.com/devlooped/json/compare/v1.0.3...v1.1.0)
 
 :sparkles: Implemented enhancements:
 
