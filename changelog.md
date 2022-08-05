@@ -1,5 +1,14 @@
 # Changelog
 
+## [v1.1.2](https://github.com/devlooped/json/tree/v1.1.2) (2022-08-05)
+
+[Full Changelog](https://github.com/devlooped/json/compare/v1.1.1...v1.1.2)
+
+:twisted_rightwards_arrows: Merged:
+
+- +M▼ includes [\#33](https://github.com/devlooped/json/pull/33) (@github-actions[bot])
+- +M▼ includes [\#30](https://github.com/devlooped/json/pull/30) (@github-actions[bot])
+
 ## [v1.1.1](https://github.com/devlooped/json/tree/v1.1.1) (2022-08-05)
 
 [Full Changelog](https://github.com/devlooped/json/compare/v1.1.0...v1.1.1)
