@@ -148,8 +148,4 @@ as well as the `Value` item metadata containing the raw JSON that was written.
 | Value       | Optional `ITaskItem[]` parameter.<br/>Specifies the value(s) to be inserted into the specified path.                                                   |
 | RawValue    | Optional `string` parameter.<br/>Specifies the raw (JSON) value to be inserted into the specified path.                                                |
 
-## Sponsors
-
-[![sponsored](https://raw.githubusercontent.com/devlooped/oss/main/assets/images/sponsors.svg)](https://github.com/sponsors/devlooped) [![clarius](https://raw.githubusercontent.com/clarius/branding/main/logo/byclarius.svg)](https://github.com/clarius)[![clarius](https://raw.githubusercontent.com/clarius/branding/main/logo/logo.svg)](https://github.com/clarius)
-
-*[get mentioned here too](https://github.com/sponsors/devlooped)!*
+<!-- include ../../docs/footer.md -->
