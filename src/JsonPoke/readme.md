@@ -163,8 +163,6 @@ as well as the `Value` item metadata containing the raw JSON that was written.
 
 <!-- sponsors.md -->
 
-&nbsp;
-
 [![Sponsor this project](https://raw.githubusercontent.com/devlooped/sponsors/main/sponsor.png "Sponsor this project")](https://github.com/sponsors/devlooped)
 &nbsp;
 
