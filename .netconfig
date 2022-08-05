@@ -170,6 +170,6 @@
 	weak
 [file "docs/sponsors.md"]
 	url = https://github.com/devlooped/sponsors/blob/main/sponsors.md
-	sha = ddec8ecacd46d79649e8938aa727c9fd2400b56f
-	etag = e1e50aacc72e24650793636a84f7fd999f282d2d383d35eaf2b709b4f4af443d
+	sha = 6dd1d1e95bda425926b2ca7316b883035938205e
+	etag = 0d49535c80ae91c0bdc5507077bc4e79a0f0a47804ff75722fd1ac93f9071ff8
 	weak
