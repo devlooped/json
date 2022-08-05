@@ -360,11 +360,8 @@ The versioning scheme for packages is:
 <!-- sponsors.md -->
 
 <br>&nbsp;
-<a href="https://github.com/sponsors/devlooped" title="Sponsor this project">
-  <img src="https://github.com/devlooped/sponsors/blob/main/sponsor.png" />
-</a>
-<br>
-
+[![Sponsor this project](https://github.com/devlooped/sponsors/blob/main/sponsor.png "Sponsor this project")](https://github.com/sponsors/devlooped)
+<br>&nbsp;
 [Learn more about GitHub Sponsors](https://github.com/sponsors)
 
 <!-- docs/footer.md -->
