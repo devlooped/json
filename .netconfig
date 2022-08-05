@@ -57,8 +57,8 @@
 	weak
 [file ".github/workflows/dotnet-file.yml"]
 	url = https://github.com/devlooped/oss/blob/main/.github/workflows/dotnet-file.yml
-	sha = 15e94864c0806dd899b4b8f7bb4fc8b99a62111a
-	etag = c4f8698c7c178b3ae8852e69f6a5ef87680e4a2814567bdd8609c62e2e0475d2
+	sha = d94ddb1384daf67602be0c4e02fad6c86b6c79b3
+	etag = a180d38577ce5f69caf05034d8332e99cb837fe8cfdfc0dee59cf9b6e4dbb61d
 	weak
 [file ".github/workflows/publish.yml"]
 	url = https://github.com/devlooped/oss/blob/main/.github/workflows/publish.yml
@@ -160,8 +160,8 @@
 	weak
 [file ".github/workflows/includes.yml"]
 	url = https://github.com/devlooped/oss/blob/main/.github/workflows/includes.yml
-	sha = 15e94864c0806dd899b4b8f7bb4fc8b99a62111a
-	etag = 93b9e2b3f4e6f8c0a548f55af72e4b7478135b0a4defb9245fe7ea493a20188f
+	sha = d94ddb1384daf67602be0c4e02fad6c86b6c79b3
+	etag = d390b05199c9812efa33c1f49c59e80a14cfcb46240f08eb8981b718d659f7c1
 	weak
 [file "docs/footer.md"]
 	url = https://github.com/devlooped/oss/blob/main/docs/footer.md
