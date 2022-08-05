@@ -348,31 +348,14 @@ The versioning scheme for packages is:
 # Sponsors 
 
 <!-- sponsors.md -->
-<!-- sponsors -->
+[![Kirill Osenkov](https://github.com/devlooped/sponsors/raw/main/.github/avatars/KirillOsenkov).svg "Kirill Osenkov")](https://github.com/KirillOsenkov)
+[![C. Augusto Proiete](https://github.com/devlooped/sponsors/raw/main/.github/avatars/augustoproiete).svg "C. Augusto Proiete")](https://github.com/augustoproiete)
+[![SandRock](https://github.com/devlooped/sponsors/raw/main/.github/avatars/sandrock).svg "SandRock")](https://github.com/sandrock)
+[![Amazon Web Services](https://github.com/devlooped/sponsors/raw/main/.github/avatars/aws).svg "Amazon Web Services")](https://github.com/aws)
+[![Christian Findlay](https://github.com/devlooped/sponsors/raw/main/.github/avatars/MelbourneDeveloper).svg "Christian Findlay")](https://github.com/MelbourneDeveloper)
+[![Clarius Org](https://github.com/devlooped/sponsors/raw/main/.github/avatars/clarius).svg "Clarius Org")](https://github.com/clarius)
+[![MFB Technologies, Inc.](https://github.com/devlooped/sponsors/raw/main/.github/avatars/MFB-Technologies-Inc).svg "MFB Technologies, Inc.")](https://github.com/MFB-Technologies-Inc)
 
-<a href='https://github.com/KirillOsenkov'>
-  <img src='https://github.com/devlooped/sponsors/raw/main/.github/avatars/KirillOsenkov.svg' alt='Kirill Osenkov' title='Kirill Osenkov'>
-</a>
-<a href='https://github.com/augustoproiete'>
-  <img src='https://github.com/devlooped/sponsors/raw/main/.github/avatars/augustoproiete.svg' alt='C. Augusto Proiete' title='C. Augusto Proiete'>
-</a>
-<a href='https://github.com/sandrock'>
-  <img src='https://github.com/devlooped/sponsors/raw/main/.github/avatars/sandrock.svg' alt='SandRock' title='SandRock'>
-</a>
-<a href='https://github.com/aws'>
-  <img src='https://github.com/devlooped/sponsors/raw/main/.github/avatars/aws.svg' alt='Amazon Web Services' title='Amazon Web Services'>
-</a>
-<a href='https://github.com/MelbourneDeveloper'>
-  <img src='https://github.com/devlooped/sponsors/raw/main/.github/avatars/MelbourneDeveloper.svg' alt='Christian Findlay' title='Christian Findlay'>
-</a>
-<a href='https://github.com/clarius'>
-  <img src='https://github.com/devlooped/sponsors/raw/main/.github/avatars/clarius.svg' alt='Clarius Org' title='Clarius Org'>
-</a>
-<a href='https://github.com/MFB-Technologies-Inc'>
-  <img src='https://github.com/devlooped/sponsors/raw/main/.github/avatars/MFB-Technologies-Inc.svg' alt='MFB Technologies, Inc.' title='MFB Technologies, Inc.'>
-</a>
-
-<!-- sponsors -->
 
 <!-- sponsors.md -->
 
