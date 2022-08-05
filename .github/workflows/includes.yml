@@ -11,12 +11,17 @@ jobs:
   includes:
     runs-on: ubuntu-latest
     steps:
-      - name: 🔍 defaults
-        uses: ./.github/workflows/defaults
-
       - name: 🤘 checkout
         uses: actions/checkout@v2
 
+      - name: 🔍 defaults
+        uses: ./.github/workflows/defaults
+        env:
+          GH_TOKEN_SECRET: ${{ secrets.GH_TOKEN }}
+          BOT_NAME_SECRET: ${{ secrets.BOT_NAME }}
+          BOT_EMAIL_SECRET: ${{ secrets.BOT_EMAIL }}
+          BOT_AUTHOR_SECRET: ${{ secrets.BOT_AUTHOR }}
+          
       - name: +M▼ includes
         uses: devlooped/actions-include@v4
 
