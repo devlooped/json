@@ -1,5 +1,14 @@
 # Changelog
 
+## [v1.1.1](https://github.com/devlooped/json/tree/v1.1.1) (2022-08-05)
+
+[Full Changelog](https://github.com/devlooped/json/compare/v1.1.0...v1.1.1)
+
+:twisted_rightwards_arrows: Merged:
+
+- Unify MSBuild versions [\#28](https://github.com/devlooped/json/pull/28) (@kzu)
+- +M▼ includes [\#27](https://github.com/devlooped/json/pull/27) (@github-actions[bot])
+
 ## [v1.1.0](https://github.com/devlooped/json/tree/v1.1.0) (2022-02-03)
 
 [Full Changelog](https://github.com/devlooped/json/compare/v1.0.3...v1.1.0)
