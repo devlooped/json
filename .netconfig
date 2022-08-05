@@ -165,8 +165,8 @@
 	weak
 [file "docs/footer.md"]
 	url = https://github.com/devlooped/oss/blob/main/docs/footer.md
-	sha = 5297a5620eed8cb951c2a7516017ef913490f9d7
-	etag = 19e7ed7b8b7fafbfccd8aef759a3d0eae4be2b111c3e1b7099c4890f2c8da4b1
+	sha = f1fb0b80b861a4e25910d87fef53dfa82cc5bb2e
+	etag = e3344323ace823c7f7d8f58b38fc1c0715ebf2a997b0ca81739a08407dba5087
 	weak
 [file "docs/sponsors.md"]
 	url = https://github.com/devlooped/sponsors/blob/main/sponsors.md
