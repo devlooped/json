@@ -175,6 +175,6 @@
 	weak
 [file ".github/workflows/defaults/action.yml"]
 	url = https://github.com/devlooped/oss/blob/main/.github/workflows/defaults/action.yml
-	sha = c4fe5c24d15aefe9e9be7e3101bee8dc4bc587b1
-	etag = a030cffd4096b6d84bbf44ec4c80f9330c5b104dd9f348d458b7af147b770468
+	sha = 4253d8ae0f92625f475fabba36b67b2df7cb3806
+	etag = 2db4daaf02093f57836b6045053e72d846493935d5129b6b7ac3f5aea9dca4b4
 	weak
