@@ -10,6 +10,7 @@
 [![Version](https://img.shields.io/nuget/vpre/JsonPeek.svg?color=royalblue)](https://www.nuget.org/packages/JsonPeek)
 [![Downloads](https://img.shields.io/nuget/dt/JsonPeek.svg?color=green)](https://www.nuget.org/packages/JsonPeek)
 
+<!-- #JsonPeek -->
 Read values from JSON using JSONPath.
 
 Usage:
@@ -101,14 +102,16 @@ result instead, which allow to distinguish both scenarios:
 <Error Condition="'$(Value)' == '$empty'" Text="The element $(Query) cannot have an empty value." />
 ```
 
+<!-- #JsonPeek -->
 
 ![JsonPoke Icon](assets/img/jsonpoke.png) JsonPoke
 ============
 
-Write values to JSON nodes selected with JSONPath
-
 [![Version](https://img.shields.io/nuget/vpre/JsonPoke.svg?color=royalblue)](https://www.nuget.org/packages/JsonPoke)
 [![Downloads](https://img.shields.io/nuget/dt/JsonPoke.svg?color=green)](https://www.nuget.org/packages/JsonPoke)
+
+<!-- #JsonPoke -->
+Write values to JSON nodes selected with JSONPath
 
 Usage:
 
@@ -329,6 +332,8 @@ the same as if we used `[0]`, but this makes the code more flexible if needed.
 The modified JSON nodes can be assigned to an item name using the `Result` task property, 
 and will contain the item path (matching the `Query` plus the index if multiple nodes were modified) 
 as well as the `Value` item metadata containing the raw JSON that was written.
+
+<!-- #JsonPoke -->
 
 # Dogfooding
 
