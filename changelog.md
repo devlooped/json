@@ -1,5 +1,22 @@
 # Changelog
 
+## [v1.1.7](https://github.com/devlooped/json/tree/v1.1.7) (2022-09-01)
+
+[Full Changelog](https://github.com/devlooped/json/compare/v1.1.6...v1.1.7)
+
+:hammer: Other:
+
+- Add JsonPoke=true and JsonPeek=true properties [\#55](https://github.com/devlooped/json/issues/55)
+
+:twisted_rightwards_arrows: Merged:
+
+- Add JsonPeek/JsonPoke properties [\#56](https://github.com/devlooped/json/pull/56) (@kzu)
+- +Mᐁ includes [\#49](https://github.com/devlooped/json/pull/49) (@devlooped-bot)
+
+## [v1.1.6](https://github.com/devlooped/json/tree/v1.1.6) (2022-08-05)
+
+[Full Changelog](https://github.com/devlooped/json/compare/v1.1.5...v1.1.6)
+
 ## [v1.1.5](https://github.com/devlooped/json/tree/v1.1.5) (2022-08-05)
 
 [Full Changelog](https://github.com/devlooped/json/compare/v1.1.4...v1.1.5)
