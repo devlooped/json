@@ -1,4 +1,4 @@
-<!-- include ../../readme.md#JsonPeek -->
+<!-- include ../../readme.md#JsonPoke -->
 
 <!-- include https://github.com/devlooped/sponsors/raw/main/footer.md -->
 
