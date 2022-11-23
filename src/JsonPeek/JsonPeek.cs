@@ -60,7 +60,7 @@ public class JsonPeek : Task
         if (string.IsNullOrEmpty(content))
             return Log.Warn("JPE04", $"Empty JSON content.", true);
 
-        var json = JObject.Parse(content!);
+        var json = JToken.Parse(content!);
 
         Result = json.SelectTokens(Query)
             // NOTE: we cannot create items with empty ItemSpec, so skip them entirely.
