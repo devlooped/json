@@ -162,5 +162,37 @@
     <Error Condition="'$(Port)' != '80'" Text="Expected '80' but was $(Port)" />
     <Error Condition="'$(Ssl)' != 'true'" Text="Expected 'true' but was $(Ssl)" />
   </Target>
+  
+  <Target Name="PeekArray">
+    <PropertyGroup>
+      <Json>
+        [
+          {
+          "contributor": "jd",
+          "favnumber": 10, 
+          "iscool": true
+          },
+          {
+          "name": "impostor",
+          "favnumber": 11,
+          "iscool": false
+          }
+        ]
+      </Json>
+    </PropertyGroup>
+
+    <JsonPeek Content="$(Json)" Query="$[0]">
+      <Output TaskParameter="Result" ItemName="Array" />
+    </JsonPeek>
+    <PropertyGroup>
+      <Contributor>@(Array -> '%(contributor)')</Contributor>
+      <FavNumber>@(Array -> '%(favnumber)')</FavNumber>
+      <IsCool>@(Array -> '%(iscool)')</IsCool>
+    </PropertyGroup>
+    
+    <Error Condition="'$(Contributor)' != 'jd'" Text="Expected 'jd' but was $(Contributor)" />
+    <Error Condition="'$(FavNumber)' != '10'" Text="Expected '10' but was $(FavNumber)" />
+    <Error Condition="'$(IsCool)' != 'true'" Text="Expected 'true' but was $(IsCool)" />
+  </Target>
 
 </Project>
