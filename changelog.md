@@ -1,5 +1,18 @@
 # Changelog
 
+## [v1.2.0](https://github.com/devlooped/json/tree/v1.2.0) (2022-11-28)
+
+[Full Changelog](https://github.com/devlooped/json/compare/v1.1.9...v1.2.0)
+
+:sparkles: Implemented enhancements:
+
+- Adding support for peeking into Json array files [\#70](https://github.com/devlooped/json/issues/70)
+
+:twisted_rightwards_arrows: Merged:
+
+- Add peeking for json array files [\#71](https://github.com/devlooped/json/pull/71) (@jknaudt21)
+- ⛙ ⬆️ Bump dependencies [\#65](https://github.com/devlooped/json/pull/65) (@github-actions[bot])
+
 ## [v1.1.9](https://github.com/devlooped/json/tree/v1.1.9) (2022-09-23)
 
 [Full Changelog](https://github.com/devlooped/json/compare/v1.1.8...v1.1.9)
@@ -19,7 +32,6 @@
 :twisted_rightwards_arrows: Merged:
 
 - Add JsonPeek/JsonPoke properties [\#56](https://github.com/devlooped/json/pull/56) (@kzu)
-- +Mᐁ includes [\#49](https://github.com/devlooped/json/pull/49) (@devlooped-bot)
 
 ## [v1.1.6](https://github.com/devlooped/json/tree/v1.1.6) (2022-08-05)
 
