@@ -2,7 +2,7 @@
 ============
 
 [![License](https://img.shields.io/github/license/devlooped/json.svg?color=blue)](https://github.com/devlooped/json/blob/main/license.txt)
-[![Build](https://github.com/devlooped/json/workflows/build/badge.svg?branch=main)](https://github.com/devlooped/json/actions)
+[![Build](https://github.com/devlooped/json/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/devlooped/json/actions)
 
 ![JsonPeek Icon](assets/img/jsonpeek.png) JsonPeek
 ============
@@ -338,7 +338,7 @@ as well as the `Value` item metadata containing the raw JSON that was written.
 # Dogfooding
 
 [![CI Version](https://img.shields.io/endpoint?url=https://shields.kzu.io/vpre/JsonPeek/main&label=nuget.ci&color=brightgreen)](https://pkg.kzu.io/index.json)
-[![Build](https://github.com/devlooped/json/workflows/build/badge.svg?branch=main)](https://github.com/devlooped/json/actions)
+[![Build](https://github.com/devlooped/json/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/devlooped/json/actions)
 
 We also produce CI packages from branches and pull requests so you can dogfood builds as quickly as they are produced. 
 
