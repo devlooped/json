@@ -337,12 +337,12 @@ as well as the `Value` item metadata containing the raw JSON that was written.
 
 # Dogfooding
 
-[![CI Version](https://img.shields.io/endpoint?url=https://shields.kzu.io/vpre/JsonPeek/main&label=nuget.ci&color=brightgreen)](https://pkg.kzu.io/index.json)
+[![CI Version](https://img.shields.io/endpoint?url=https://shields.kzu.app/vpre/JsonPeek/main&label=nuget.ci&color=brightgreen)](https://pkg.kzu.app/index.json)
 [![Build](https://github.com/devlooped/json/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/devlooped/json/actions)
 
 We also produce CI packages from branches and pull requests so you can dogfood builds as quickly as they are produced. 
 
-The CI feed is `https://pkg.kzu.io/index.json`. 
+The CI feed is `https://pkg.kzu.app/index.json`. 
 
 The versioning scheme for packages is:
 
