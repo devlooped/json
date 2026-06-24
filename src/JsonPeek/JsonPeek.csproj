@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <None Update="@(None)" PackFolder="$(PackFolder)" />
+    <None Update="icon.png" Pack="true" PackagePath="icon.png" PackFolder="None" />
   </ItemGroup>
 
 </Project>
