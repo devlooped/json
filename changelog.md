@@ -1,5 +1,25 @@
 # Changelog
 
+## [v1.3.0](https://github.com/devlooped/json/tree/v1.3.0) (2026-06-24)
+
+[Full Changelog](https://github.com/devlooped/json/compare/v1.2.0...v1.3.0)
+
+:bug: Fixed bugs:
+
+- JsonPeek not found on dotnet pack [\#96](https://github.com/devlooped/json/issues/96)
+- Feature req: JsonPeek not found in cross-trageting projects [\#87](https://github.com/devlooped/json/issues/87)
+- The "JsonPeek" task was not found [\#86](https://github.com/devlooped/json/issues/86)
+- Cannot write metadata to root object [\#85](https://github.com/devlooped/json/issues/85)
+
+:hammer: Other:
+
+- How to use it on Directory.Build.props [\#83](https://github.com/devlooped/json/issues/83)
+
+:twisted_rightwards_arrows: Merged:
+
+- Bump Microsoft.Build.Utilities.Core to 17.14.28 [\#113](https://github.com/devlooped/json/pull/113) (@kzu)
+- Fix root object replacement in JsonPoke [\#112](https://github.com/devlooped/json/pull/112) (@kzu)
+
 ## [v1.2.0](https://github.com/devlooped/json/tree/v1.2.0) (2022-11-28)
 
 [Full Changelog](https://github.com/devlooped/json/compare/v1.1.9...v1.2.0)
