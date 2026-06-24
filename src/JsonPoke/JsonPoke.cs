@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -84,8 +84,16 @@ public class JsonPoke : Task
 
         var jvalue = new Lazy<JToken>(GetValue);
 
-        var json = JObject.Parse(content!);
+        var json = JToken.Parse(content!);
         var matches = JPathExpr.Matches(Query).Cast<Match>().ToList();
+
+        void SetToken(JToken node, JToken value)
+        {
+            if (node.Parent == null)
+                json = value;
+            else
+                node.Replace(value);
+        }
         // If we have any part of teh expression using our own "from end" syntax for array indexing, 
         // we know we'll be inserting a *new* 
         var nodes = matches.Any(m => m.Groups["end"].Success) ? new() : json.SelectTokens(Query).ToList();
@@ -204,7 +212,7 @@ public class JsonPoke : Task
                 // We'll be doing complex object replacement, 
                 // so just replace the whole thing in one shot, 
                 // no smarts for target-type selection.
-                node.Replace(jvalue.Value);
+                SetToken(node, jvalue.Value);
                 AddResult(jvalue.Value, i);
                 continue;
             }
@@ -230,7 +238,7 @@ public class JsonPoke : Task
                 _ => jvalue.Value,
             };
 
-            node.Replace(value);
+            SetToken(node, value);
             AddResult(value, i);
         }
 
