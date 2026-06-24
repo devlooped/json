@@ -1,4 +1,4 @@
-﻿<Project>
+<Project>
 
   <UsingTask TaskName="Error" AssemblyName="Microsoft.Build.Tasks.Core, PublicKeyToken=b03f5f7f11d50a3a" />
   <UsingTask TaskName="Message" AssemblyName="Microsoft.Build.Tasks.Core, PublicKeyToken=b03f5f7f11d50a3a" />
@@ -282,6 +282,30 @@
     <JsonPoke ContentPath="sample.json" Query="$(Query)" Value="false">
       <Output TaskParameter="Result" ItemName="Changed" />
     </JsonPoke>
+  </Target>
+
+  <Target Name="PokeRootObject">
+    <PropertyGroup>
+      <Query>$.a</Query>
+      <Expected>Value of a</Expected>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Value Include="metadata">
+        <a>Value of a</a>
+      </Value>
+      <Property Include="a" />
+    </ItemGroup>
+
+    <JsonPoke Content="{}" Query="$" Value="@(Value)" Properties="@(Property)">
+      <Output TaskParameter="Content" PropertyName="Content" />
+    </JsonPoke>
+
+    <JsonPeek Content="$(Content)" Query="$(Query)">
+      <Output TaskParameter="Result" PropertyName="Actual" />
+    </JsonPeek>
+
+    <Error Condition="'$(Expected)' != '$(Actual)'" Text="Expected $(Expected) but was $(Actual)" />
   </Target>
 
   <Target Name="PokeContentJsonProperty">
