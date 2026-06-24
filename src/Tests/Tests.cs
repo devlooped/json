@@ -143,6 +143,42 @@ public record Tests(ITestOutputHelper Output)
     }
 
     [Fact]
+    public void PokeRootWithMetadata()
+    {
+        var value = new TaskItem("metadata");
+        value.SetMetadata("a", "Value of a");
+
+        var poke = new JsonPoke
+        {
+            Content = "{}",
+            Query = "$",
+            Value = new[] { value },
+            Properties = new[] { new TaskItem("a") },
+        };
+
+        Assert.True(poke.Execute());
+
+        dynamic obj = JObject.Parse(poke.Content!);
+        Assert.Equal("Value of a", (string?)obj?.a);
+    }
+
+    [Fact]
+    public void PokeRootWithRawValue()
+    {
+        var poke = new JsonPoke
+        {
+            Content = "{}",
+            Query = "$",
+            RawValue = @"{ ""a"": ""Value of a"" }",
+        };
+
+        Assert.True(poke.Execute());
+
+        dynamic obj = JObject.Parse(poke.Content!);
+        Assert.Equal("Value of a", (string?)obj?.a);
+    }
+
+    [Fact]
     public void AddObjectArray()
     {
         var poke = new JsonPoke
